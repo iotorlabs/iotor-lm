@@ -3,8 +3,7 @@
 var tmp = require('tmp');
 var childProcess = require('child_process');
 var arraydiff = require('arr-diff');
-var fs = require('fs');
-var wrench = require('wrench');
+var fs = require('fs-extra');
 var inquirer = require('inquirer');
 var path = require('path');
 
@@ -114,7 +113,7 @@ module.exports = function (grunt) {
 
         var dir = tmp.dirSync().name;
 
-        wrench.copyDirSyncRecursive(__dirname, dir, {
+        fs.copySync(__dirname, dir, {
             forceDelete: true,
             include: function (path) {
                 return !path.match(/node_modules|\.git|test/);
@@ -133,8 +132,8 @@ module.exports = function (grunt) {
 
         grunt.log.writeln('Moving node_modules to lib directory...');
 
-        wrench.copyDirSyncRecursive(path.resolve(dir, 'node_modules'), path.resolve(dir, 'lib', 'node_modules'));
-        wrench.rmdirSyncRecursive(path.resolve(dir, 'node_modules'));
+        fs.copySync(path.resolve(dir, 'node_modules'), path.resolve(dir, 'lib', 'node_modules'));
+        fs.rmdirSync(path.resolve(dir, 'node_modules'));
 
         grunt.log.writeln('Testing bower on sample project...');
 
