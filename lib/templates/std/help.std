@@ -1,26 +1,25 @@
-
 Usage:
-
 {{#condense}}
 {{#each usage}}
-    {{#cyan}}bower{{/cyan}} {{.}}
+    {{#cyan}}{{@root.bin}}{{/cyan}} {{.}}
 {{/each}}
 {{/condense}}
 
-Commands:
 
+Commands:
 {{#condense}}
 {{#each commands}}
     {{#rpad minLength="23"}}{{@key}}{{/rpad}} {{.}}
 {{/each}}
 {{/condense}}
 
-Options:
 
+Options:
 {{#condense}}
 {{#each options}}
     {{#yellow}}{{#rpad minLength="23"}}{{#if shorthand}}{{shorthand}}, {{/if}}{{flag}}{{/rpad}}{{/yellow}} {{description}}
 {{/each}}
 {{/condense}}
 
-See 'bower help <command>' for more information on a specific command.
+
+See '{{bin}} help <command>' for more information on a specific command.
