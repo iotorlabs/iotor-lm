@@ -7,5 +7,5 @@
 
 {{#unless saveResolutions}}
 
-Prefix the choice with ! to persist it to bower.json
+Prefix the choice with ! to persist it to ano.json
 {{/unless}}

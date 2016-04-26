@@ -6,10 +6,10 @@
 /test/reports
 /test/tmp/
 
-/bower.json
+/ano.json
 /component.json
-/bower_components
+/ano_libraries
 /test/sample
-!/test/sample/bower.json
+!/test/sample/ano.json
 /npm-shrinkwrap.json
 .idea

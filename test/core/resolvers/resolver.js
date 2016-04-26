@@ -13,840 +13,840 @@ var Resolver = require('../../../lib/core/resolvers/Resolver');
 var defaultConfig = require('../../../lib/config');
 
 describe('Resolver', function () {
-  var tempDir = path.resolve(__dirname, '../../tmp/tmp');
-  var testPackage = path.resolve(__dirname, '../../assets/package-a');
-  var logger;
-  var dirMode0777;
-  var config = defaultConfig();
+    var tempDir = path.resolve(__dirname, '../../tmp/tmp');
+    var testPackage = path.resolve(__dirname, '../../assets/package-a');
+    var logger;
+    var dirMode0777;
+    var config = defaultConfig();
 
-  before(function () {
-    var stat;
+    before(function () {
+        var stat;
 
-    mkdirp.sync(tempDir);
-    stat = fs.statSync(tempDir);
-    dirMode0777 = stat.mode;
-    rimraf.sync(tempDir);
+        mkdirp.sync(tempDir);
+        stat = fs.statSync(tempDir);
+        dirMode0777 = stat.mode;
+        rimraf.sync(tempDir);
 
-    logger = new Logger();
-  });
+        logger = new Logger();
+    });
 
-  afterEach(function () {
-    logger.removeAllListeners();
-  });
+    afterEach(function () {
+        logger.removeAllListeners();
+    });
 
-  function create(decEndpoint) {
-    if (typeof decEndpoint === 'string') {
-      decEndpoint = {source: decEndpoint};
+    function create(decEndpoint) {
+        if (typeof decEndpoint === 'string') {
+            decEndpoint = {source: decEndpoint};
+        }
+
+        return new Resolver(decEndpoint, config, logger);
     }
 
-    return new Resolver(decEndpoint, config, logger);
-  }
+    describe('.getSource', function () {
+        it('should return the resolver source', function () {
+            var resolver = create('foo');
 
-  describe('.getSource', function () {
-    it('should return the resolver source', function () {
-      var resolver = create('foo');
-
-      expect(resolver.getSource()).to.equal('foo');
-    });
-  });
-
-  describe('.getName', function () {
-    it('should return the resolver name', function () {
-      var resolver = create({source: 'foo', name: 'bar'});
-
-      expect(resolver.getName()).to.equal('bar');
+            expect(resolver.getSource()).to.equal('foo');
+        });
     });
 
-    it('should return the resolver source if none is specified (default guess mechanism)', function () {
-      var resolver = create('foo');
+    describe('.getName', function () {
+        it('should return the resolver name', function () {
+            var resolver = create({source: 'foo', name: 'bar'});
 
-      expect(resolver.getName()).to.equal('foo');
-    });
-  });
+            expect(resolver.getName()).to.equal('bar');
+        });
 
-  describe('.getTarget', function () {
-    it('should return the resolver target', function () {
-      var resolver = create({source: 'foo', target: '~2.1.0'});
+        it('should return the resolver source if none is specified (default guess mechanism)', function () {
+            var resolver = create('foo');
 
-      expect(resolver.getTarget()).to.equal('~2.1.0');
-    });
-
-    it('should return * if none was configured', function () {
-      var resolver = create('foo');
-
-      expect(resolver.getTarget()).to.equal('*');
+            expect(resolver.getName()).to.equal('foo');
+        });
     });
 
-    it('should return * if latest was configured (for backwards compatibility)', function () {
-      var resolver = create('foo');
+    describe('.getTarget', function () {
+        it('should return the resolver target', function () {
+            var resolver = create({source: 'foo', target: '~2.1.0'});
 
-      expect(resolver.getTarget()).to.equal('*');
-    });
-  });
+            expect(resolver.getTarget()).to.equal('~2.1.0');
+        });
 
-  describe('.hasNew', function () {
-    before(function () {
-      mkdirp.sync(tempDir);
-    });
+        it('should return * if none was configured', function () {
+            var resolver = create('foo');
 
-    beforeEach(function () {
-      fs.writeFileSync(path.join(tempDir, '.bower.json'), JSON.stringify({
-        name: 'test'
-      }));
-    });
+            expect(resolver.getTarget()).to.equal('*');
+        });
 
-    after(function (next) {
-      rimraf(tempDir, next);
+        it('should return * if latest was configured (for backwards compatibility)', function () {
+            var resolver = create('foo');
+
+            expect(resolver.getTarget()).to.equal('*');
+        });
     });
 
-    it('should throw an error if already working (resolving)', function (next) {
-      var resolver = create('foo');
-      var succeeded;
+    describe('.hasNew', function () {
+        before(function () {
+            mkdirp.sync(tempDir);
+        });
 
-      resolver._resolve = function () {
-      };
+        beforeEach(function () {
+            fs.writeFileSync(path.join(tempDir, '.ano.json'), JSON.stringify({
+                name: 'test'
+            }));
+        });
 
-      resolver.resolve()
+        after(function (next) {
+            rimraf(tempDir, next);
+        });
+
+        it('should throw an error if already working (resolving)', function (next) {
+            var resolver = create('foo');
+            var succeeded;
+
+            resolver._resolve = function () {
+            };
+
+            resolver.resolve()
         .then(function () {
           // Test if resolve can be called again when done
-          resolver.resolve()
+            resolver.resolve()
             .then(function () {
-              next(succeeded ? new Error('Should have failed') : null);
+                next(succeeded ? new Error('Should have failed') : null);
             });
         })
         .done();
 
-      resolver.hasNew({})
+            resolver.hasNew({})
         .then(function () {
-          succeeded = true;
+            succeeded = true;
         }, function (err) {
-          expect(err).to.be.an(Error);
-          expect(err.code).to.equal('EWORKING');
-          expect(err.message).to.match(/already working/i);
+            expect(err).to.be.an(Error);
+            expect(err.code).to.equal('EWORKING');
+            expect(err.message).to.match(/already working/i);
         });
-    });
+        });
 
-    it('should throw an error if already working (checking for newer version)', function (next) {
-      var resolver = create('foo');
-      var succeeded;
+        it('should throw an error if already working (checking for newer version)', function (next) {
+            var resolver = create('foo');
+            var succeeded;
 
-      resolver.hasNew({})
+            resolver.hasNew({})
         .then(function () {
           // Test if hasNew can be called again when done
-          resolver.hasNew({})
+            resolver.hasNew({})
             .then(function () {
-              next(succeeded ? new Error('Should have failed') : null);
+                next(succeeded ? new Error('Should have failed') : null);
             });
         })
         .done();
 
-      resolver.hasNew({})
+            resolver.hasNew({})
         .then(function () {
-          succeeded = true;
+            succeeded = true;
         }, function (err) {
-          expect(err).to.be.an(Error);
-          expect(err.code).to.equal('EWORKING');
-          expect(err.message).to.match(/already working/i);
+            expect(err).to.be.an(Error);
+            expect(err.code).to.equal('EWORKING');
+            expect(err.message).to.match(/already working/i);
         });
-    });
+        });
 
-    it('should resolve to true by default', function (next) {
-      var resolver = create('foo');
+        it('should resolve to true by default', function (next) {
+            var resolver = create('foo');
 
-      resolver.hasNew({})
+            resolver.hasNew({})
         .then(function (hasNew) {
-          expect(hasNew).to.equal(true);
-          next();
+            expect(hasNew).to.equal(true);
+            next();
         })
         .done();
-    });
+        });
 
-    it('should call _hasNew with the package meta', function (next) {
-      var resolver = create('foo');
-      var meta;
+        it('should call _hasNew with the package meta', function (next) {
+            var resolver = create('foo');
+            var meta;
 
-      resolver._hasNew = function (pkgMeta) {
-        meta = pkgMeta;
-        return Q.resolve(true);
-      };
+            resolver._hasNew = function (pkgMeta) {
+                meta = pkgMeta;
+                return Q.resolve(true);
+            };
 
-      resolver.hasNew({name: 'test'})
+            resolver.hasNew({name: 'test'})
         .then(function () {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('test');
-          next();
+            expect(meta).to.be.an('object');
+            expect(meta.name).to.equal('test');
+            next();
         })
         .done();
-    });
+        });
 
-    it('should not read the package meta if already passed', function (next) {
-      var resolver = create('foo');
-      var meta;
+        it('should not read the package meta if already passed', function (next) {
+            var resolver = create('foo');
+            var meta;
 
-      resolver._hasNew = function (pkgMeta) {
-        meta = pkgMeta;
-        return Q.resolve(true);
-      };
+            resolver._hasNew = function (pkgMeta) {
+                meta = pkgMeta;
+                return Q.resolve(true);
+            };
 
-      resolver.hasNew({
-        name: 'foo'
-      })
+            resolver.hasNew({
+                name: 'foo'
+            })
         .then(function () {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('foo');
-          next();
+            expect(meta).to.be.an('object');
+            expect(meta.name).to.equal('foo');
+            next();
         })
         .done();
+        });
     });
-  });
 
-  describe('.resolve', function () {
-    it('should reject the promise if _resolve is not implemented', function (next) {
-      var resolver = create('foo');
+    describe('.resolve', function () {
+        it('should reject the promise if _resolve is not implemented', function (next) {
+            var resolver = create('foo');
 
-      resolver.resolve()
+            resolver.resolve()
         .then(function () {
-          next(new Error('Should have rejected the promise'));
+            next(new Error('Should have rejected the promise'));
         }, function (err) {
-          expect(err).to.be.an(Error);
-          expect(err.message).to.contain('_resolve not implemented');
-          next();
+            expect(err).to.be.an(Error);
+            expect(err.message).to.contain('_resolve not implemented');
+            next();
         })
         .done();
-    });
+        });
 
-    it('should throw an error if already working (resolving)', function (next) {
-      var resolver = create('foo');
-      var succeeded;
+        it('should throw an error if already working (resolving)', function (next) {
+            var resolver = create('foo');
+            var succeeded;
 
-      resolver._resolve = function () {
-      };
+            resolver._resolve = function () {
+            };
 
-      resolver.resolve()
+            resolver.resolve()
         .then(function () {
           // Test if resolve can be called again when done
-          resolver.resolve()
+            resolver.resolve()
             .then(function () {
-              next(succeeded ? new Error('Should have failed') : null);
+                next(succeeded ? new Error('Should have failed') : null);
             });
         })
         .done();
 
-      resolver.resolve()
+            resolver.resolve()
         .then(function () {
-          succeeded = true;
+            succeeded = true;
         }, function (err) {
-          expect(err).to.be.an(Error);
-          expect(err.code).to.equal('EWORKING');
-          expect(err.message).to.match(/already working/i);
+            expect(err).to.be.an(Error);
+            expect(err.code).to.equal('EWORKING');
+            expect(err.message).to.match(/already working/i);
         });
-    });
+        });
 
-    it('should throw an error if already working (checking newer version)', function (next) {
-      var resolver = create('foo');
-      var succeeded;
+        it('should throw an error if already working (checking newer version)', function (next) {
+            var resolver = create('foo');
+            var succeeded;
 
-      resolver._resolve = function () {
-      };
+            resolver._resolve = function () {
+            };
 
-      resolver.hasNew({})
+            resolver.hasNew({})
         .then(function () {
           // Test if hasNew can be called again when done
-          resolver.hasNew({})
+            resolver.hasNew({})
             .then(function () {
-              next(succeeded ? new Error('Should have failed') : null);
+                next(succeeded ? new Error('Should have failed') : null);
             });
         })
         .done();
 
-      resolver.resolve()
+            resolver.resolve()
         .then(function () {
-          succeeded = true;
+            succeeded = true;
         }, function (err) {
-          expect(err).to.be.an(Error);
-          expect(err.code).to.equal('EWORKING');
-          expect(err.message).to.match(/already working/i);
+            expect(err).to.be.an(Error);
+            expect(err.code).to.equal('EWORKING');
+            expect(err.message).to.match(/already working/i);
+        });
+        });
+
+        it('should call all the functions necessary to resolve by the correct order', function (next) {
+            var resolver;
+
+            function DummyResolver() {
+                Resolver.apply(this, arguments);
+                this._stack = [];
+            }
+
+            util.inherits(DummyResolver, Resolver);
+
+            DummyResolver.prototype.getStack = function () {
+                return this._stack;
+            };
+
+            DummyResolver.prototype.resolve = function () {
+                this._stack = [];
+                return Resolver.prototype.resolve.apply(this, arguments);
+            };
+
+            DummyResolver.prototype._createTempDir = function () {
+                this._stack.push('before _createTempDir');
+                return Resolver.prototype._createTempDir.apply(this, arguments)
+          .then(function (val) {
+              this._stack.push('after _createTempDir');
+              return val;
+          }.bind(this));
+            };
+            DummyResolver.prototype._resolve = function () {
+            };
+            DummyResolver.prototype._readJson = function () {
+                this._stack.push('before _readJson');
+                return Resolver.prototype._readJson.apply(this, arguments)
+          .then(function (val) {
+              this._stack.push('after _readJson');
+              return val;
+          }.bind(this));
+            };
+            DummyResolver.prototype._applyPkgMeta = function () {
+                this._stack.push('before _applyPkgMeta');
+                return Resolver.prototype._applyPkgMeta.apply(this, arguments)
+          .then(function (val) {
+              this._stack.push('after _applyPkgMeta');
+              return val;
+          }.bind(this));
+            };
+            DummyResolver.prototype._savePkgMeta = function () {
+                this._stack.push('before _savePkgMeta');
+                return Resolver.prototype._savePkgMeta.apply(this, arguments)
+          .then(function (val) {
+              this._stack.push('after _savePkgMeta');
+              return val;
+          }.bind(this));
+            };
+
+            resolver = new DummyResolver({source: 'foo'}, config, logger);
+
+            resolver.resolve()
+        .then(function () {
+            expect(resolver.getStack()).to.eql([
+                'before _createTempDir',
+                'after _createTempDir',
+                'before _readJson',
+                'after _readJson',
+            // Both below are called in parallel
+                'before _applyPkgMeta',
+                'after _applyPkgMeta',
+                'before _savePkgMeta',
+                'after _savePkgMeta'
+            ]);
+            next();
+        })
+        .done();
+        });
+
+        it('should resolve with the canonical dir (folder)', function (next) {
+            var resolver = create('foo');
+
+            resolver._resolve = function () {
+            };
+
+            resolver.resolve()
+        .then(function (folder) {
+            expect(folder).to.be.a('string');
+            expect(fs.existsSync(folder)).to.be(true);
+            next();
+        })
+        .done();
         });
     });
 
-    it('should call all the functions necessary to resolve by the correct order', function (next) {
-      var resolver;
+    describe('.getTempDir', function () {
+        it('should return null if resolver is not yet resolved', function () {
+            var resolver = create('foo');
 
-      function DummyResolver() {
-        Resolver.apply(this, arguments);
-        this._stack = [];
-      }
-
-      util.inherits(DummyResolver, Resolver);
-
-      DummyResolver.prototype.getStack = function () {
-        return this._stack;
-      };
-
-      DummyResolver.prototype.resolve = function () {
-        this._stack = [];
-        return Resolver.prototype.resolve.apply(this, arguments);
-      };
-
-      DummyResolver.prototype._createTempDir = function () {
-        this._stack.push('before _createTempDir');
-        return Resolver.prototype._createTempDir.apply(this, arguments)
-          .then(function (val) {
-            this._stack.push('after _createTempDir');
-            return val;
-          }.bind(this));
-      };
-      DummyResolver.prototype._resolve = function () {
-      };
-      DummyResolver.prototype._readJson = function () {
-        this._stack.push('before _readJson');
-        return Resolver.prototype._readJson.apply(this, arguments)
-          .then(function (val) {
-            this._stack.push('after _readJson');
-            return val;
-          }.bind(this));
-      };
-      DummyResolver.prototype._applyPkgMeta = function () {
-        this._stack.push('before _applyPkgMeta');
-        return Resolver.prototype._applyPkgMeta.apply(this, arguments)
-          .then(function (val) {
-            this._stack.push('after _applyPkgMeta');
-            return val;
-          }.bind(this));
-      };
-      DummyResolver.prototype._savePkgMeta = function () {
-        this._stack.push('before _savePkgMeta');
-        return Resolver.prototype._savePkgMeta.apply(this, arguments)
-          .then(function (val) {
-            this._stack.push('after _savePkgMeta');
-            return val;
-          }.bind(this));
-      };
-
-      resolver = new DummyResolver({source: 'foo'}, config, logger);
-
-      resolver.resolve()
-        .then(function () {
-          expect(resolver.getStack()).to.eql([
-            'before _createTempDir',
-            'after _createTempDir',
-            'before _readJson',
-            'after _readJson',
-            // Both below are called in parallel
-            'before _applyPkgMeta',
-            'after _applyPkgMeta',
-            'before _savePkgMeta',
-            'after _savePkgMeta'
-          ]);
-          next();
-        })
-        .done();
-    });
-
-    it('should resolve with the canonical dir (folder)', function (next) {
-      var resolver = create('foo');
-
-      resolver._resolve = function () {
-      };
-
-      resolver.resolve()
-        .then(function (folder) {
-          expect(folder).to.be.a('string');
-          expect(fs.existsSync(folder)).to.be(true);
-          next();
-        })
-        .done();
-    });
-  });
-
-  describe('.getTempDir', function () {
-    it('should return null if resolver is not yet resolved', function () {
-      var resolver = create('foo');
-
-      expect(resolver.getTempDir() == null).to.be(true);
-    });
-
-    it('should still return null if resolve failed', function () {
-      it('should still return null', function (next) {
-        var resolver = create('foo');
-
-        resolver._resolve = function () {
-          throw new Error('I\'ve failed to resolve');
-        };
-
-        resolver.resolve()
-          .fail(function () {
             expect(resolver.getTempDir() == null).to.be(true);
-            next();
-          });
-      });
-    });
+        });
 
-    it('should return the canonical dir (folder) if resolve succeeded', function (next) {
-      var resolver = create('foo');
+        it('should still return null if resolve failed', function () {
+            it('should still return null', function (next) {
+                var resolver = create('foo');
 
-      resolver._resolve = function () {
-      };
+                resolver._resolve = function () {
+                    throw new Error('I\'ve failed to resolve');
+                };
 
-      resolver.resolve()
-        .then(function () {
-          var dir = resolver.getTempDir();
-
-          expect(dir).to.be.a('string');
-          expect(fs.existsSync(dir)).to.be(true);
-          next();
-        })
-        .done();
-    });
-  });
-
-  describe('.getPkgMeta', function () {
-    it('should return null if resolver is not yet resolved', function () {
-      var resolver = create('foo');
-
-      expect(resolver.getPkgMeta() == null).to.be(true);
-    });
-
-    it('should still return null if resolve failed', function () {
-      it('should still return null', function (next) {
-        var resolver = create('foo');
-
-        resolver._resolve = function () {
-          throw new Error('I\'ve failed to resolve');
-        };
-
-        resolver.resolve()
+                resolver.resolve()
           .fail(function () {
-            expect(resolver.getPkgMeta() == null).to.be(true);
-            next();
+              expect(resolver.getTempDir() == null).to.be(true);
+              next();
           });
-      });
-    });
+            });
+        });
 
-    it('should return the package meta if resolve succeeded', function (next) {
-      var resolver = create('foo');
+        it('should return the canonical dir (folder) if resolve succeeded', function (next) {
+            var resolver = create('foo');
 
-      resolver._resolve = function () {
-      };
+            resolver._resolve = function () {
+            };
 
-      resolver.resolve()
+            resolver.resolve()
         .then(function () {
-          expect(resolver.getPkgMeta()).to.be.an('object');
-          next();
-        })
-        .done();
-    });
-  });
+            var dir = resolver.getTempDir();
 
-  describe('._createTempDir', function () {
-    it('should create a directory inside a "username/bower" folder, located within the OS temp folder', function (next) {
-      var resolver = create('foo');
-
-      resolver._createTempDir()
-        .then(function (dir) {
-          var dirname;
-          var osTempDir;
-
-          expect(dir).to.be.a('string');
-          expect(fs.existsSync(dir)).to.be(true);
-
-          dirname = path.dirname(dir);
-          osTempDir = path.resolve(tmp.tmpdir);
-
-          expect(dir.indexOf(osTempDir)).to.be(0);
-          expect(dir.indexOf(config.tmp)).to.be(0);
-
-          expect(path.basename(dirname)).to.equal('bower');
-          expect(path.dirname(path.dirname(dirname))).to.equal(osTempDir);
-          next();
-        })
-        .done();
-    });
-
-    it('should set the dir mode the same as the process', function (next) {
-      var resolver = create('foo');
-
-      resolver._createTempDir()
-        .then(function (dir) {
-          var stat = fs.statSync(dir);
-          var expectedMode = dirMode0777 & ~process.umask();
-
-          expect(stat.mode).to.equal(expectedMode);
-          next();
-        })
-        .done();
-    });
-
-    it('should remove the folder after execution', function (next) {
-      this.timeout(15000);  // Give some time to execute
-
-      rimraf(config.tmp, function (err) {
-        if (err) return next(err);
-
-        cmd('node', ['test/assets/test-temp-dir/test.js'], {cwd: path.resolve(__dirname, '../../..')})
-          .then(function () {
-            expect(fs.existsSync(config.tmp)).to.be(true);
-            expect(fs.readdirSync(config.tmp)).to.eql([]);
+            expect(dir).to.be.a('string');
+            expect(fs.existsSync(dir)).to.be(true);
             next();
+        })
+        .done();
+        });
+    });
+
+    describe('.getPkgMeta', function () {
+        it('should return null if resolver is not yet resolved', function () {
+            var resolver = create('foo');
+
+            expect(resolver.getPkgMeta() == null).to.be(true);
+        });
+
+        it('should still return null if resolve failed', function () {
+            it('should still return null', function (next) {
+                var resolver = create('foo');
+
+                resolver._resolve = function () {
+                    throw new Error('I\'ve failed to resolve');
+                };
+
+                resolver.resolve()
+          .fail(function () {
+              expect(resolver.getPkgMeta() == null).to.be(true);
+              next();
+          });
+            });
+        });
+
+        it('should return the package meta if resolve succeeded', function (next) {
+            var resolver = create('foo');
+
+            resolver._resolve = function () {
+            };
+
+            resolver.resolve()
+        .then(function () {
+            expect(resolver.getPkgMeta()).to.be.an('object');
+            next();
+        })
+        .done();
+        });
+    });
+
+    describe('._createTempDir', function () {
+        it('should create a directory inside a "username/bower" folder, located within the OS temp folder', function (next) {
+            var resolver = create('foo');
+
+            resolver._createTempDir()
+        .then(function (dir) {
+            var dirname;
+            var osTempDir;
+
+            expect(dir).to.be.a('string');
+            expect(fs.existsSync(dir)).to.be(true);
+
+            dirname = path.dirname(dir);
+            osTempDir = path.resolve(tmp.tmpdir);
+
+            expect(dir.indexOf(osTempDir)).to.be(0);
+            expect(dir.indexOf(config.tmp)).to.be(0);
+
+            expect(path.basename(dirname)).to.equal('bower');
+            expect(path.dirname(path.dirname(dirname))).to.equal(osTempDir);
+            next();
+        })
+        .done();
+        });
+
+        it('should set the dir mode the same as the process', function (next) {
+            var resolver = create('foo');
+
+            resolver._createTempDir()
+        .then(function (dir) {
+            var stat = fs.statSync(dir);
+            var expectedMode = dirMode0777 & ~process.umask();
+
+            expect(stat.mode).to.equal(expectedMode);
+            next();
+        })
+        .done();
+        });
+
+        it('should remove the folder after execution', function (next) {
+            this.timeout(15000);  // Give some time to execute
+
+            rimraf(config.tmp, function (err) {
+                if (err) return next(err);
+
+                cmd('node', ['test/assets/test-temp-dir/test.js'], {cwd: path.resolve(__dirname, '../../..')})
+          .then(function () {
+              expect(fs.existsSync(config.tmp)).to.be(true);
+              expect(fs.readdirSync(config.tmp)).to.eql([]);
+              next();
           }, function (err) {
-            next(new Error(err.details));
+              next(new Error(err.details));
           })
           .done();
-      });
-    });
+            });
+        });
 
-    it('should remove the folder on an uncaught exception', function (next) {
-      rimraf(config.tmp, function (err) {
-        if (err) return next(err);
+        it('should remove the folder on an uncaught exception', function (next) {
+            rimraf(config.tmp, function (err) {
+                if (err) return next(err);
 
-        cmd('node', ['test/assets/test-temp-dir/test-exception.js'], {cwd: path.resolve(__dirname, '../../..')})
+                cmd('node', ['test/assets/test-temp-dir/test-exception.js'], {cwd: path.resolve(__dirname, '../../..')})
           .then(function () {
-            next(new Error('The command should have failed'));
+              next(new Error('The command should have failed'));
           }, function () {
-            expect(fs.existsSync(config.tmp)).to.be(true);
-            expect(fs.readdirSync(config.tmp)).to.eql([]);
-            next();
+              expect(fs.existsSync(config.tmp)).to.be(true);
+              expect(fs.readdirSync(config.tmp)).to.eql([]);
+              next();
           })
           .done();
-      });
-    });
+            });
+        });
 
-    it('should set _tempDir with the created directory', function (next) {
-      var resolver = create('foo');
+        it('should set _tempDir with the created directory', function (next) {
+            var resolver = create('foo');
 
-      resolver._createTempDir()
+            resolver._createTempDir()
         .then(function (dir) {
-          expect(resolver._tempDir).to.be.ok();
-          expect(resolver._tempDir).to.equal(dir);
-          next();
+            expect(resolver._tempDir).to.be.ok();
+            expect(resolver._tempDir).to.equal(dir);
+            next();
         })
         .done();
-    });
+        });
 
-    it('should remove @ from directory names', function (next) {
-      var resolver = create('foo@bar');
+        it('should remove @ from directory names', function (next) {
+            var resolver = create('foo@bar');
 
-      resolver._createTempDir()
+            resolver._createTempDir()
         .then(function (dir) {
-          expect(resolver._tempDir).to.be.ok();
-          expect(resolver._tempDir.indexOf('@')).to.equal(-1);
-          next();
+            expect(resolver._tempDir).to.be.ok();
+            expect(resolver._tempDir.indexOf('@')).to.equal(-1);
+            next();
         })
         .done();
+        });
     });
-  });
 
-  describe('._cleanTempDir', function () {
-    it('should not error out if temporary dir is not yet created', function (next) {
-      var resolver = create('foo');
+    describe('._cleanTempDir', function () {
+        it('should not error out if temporary dir is not yet created', function (next) {
+            var resolver = create('foo');
 
-      resolver._cleanTempDir()
+            resolver._cleanTempDir()
         .then(next.bind(null))
         .done();
-    });
+        });
 
-    it('should delete the temporary folder contents', function (next) {
-      var resolver = create('foo');
+        it('should delete the temporary folder contents', function (next) {
+            var resolver = create('foo');
 
-      resolver._createTempDir()
+            resolver._createTempDir()
         .then(resolver._cleanTempDir.bind(resolver))
         .then(function (dir) {
-          expect(dir).to.equal(resolver.getTempDir());
-          expect(fs.readdirSync(dir).length).to.be(0);
-          next();
+            expect(dir).to.equal(resolver.getTempDir());
+            expect(fs.readdirSync(dir).length).to.be(0);
+            next();
         })
         .done();
-    });
+        });
 
-    it('should keep the mode', function (next) {
-      var resolver = create('foo');
+        it('should keep the mode', function (next) {
+            var resolver = create('foo');
 
-      resolver._createTempDir()
+            resolver._createTempDir()
         .then(resolver._cleanTempDir.bind(resolver))
         .then(function (dir) {
-          var stat = fs.statSync(dir);
-          var expectedMode = dirMode0777 & ~process.umask();
+            var stat = fs.statSync(dir);
+            var expectedMode = dirMode0777 & ~process.umask();
 
-          expect(stat.mode).to.equal(expectedMode);
-          next();
+            expect(stat.mode).to.equal(expectedMode);
+            next();
         })
         .done();
-    });
+        });
 
-    it('should keep the dir path', function (next) {
-      var resolver = create('foo');
-      var tempDir;
+        it('should keep the dir path', function (next) {
+            var resolver = create('foo');
+            var tempDir;
 
-      resolver._createTempDir()
+            resolver._createTempDir()
         .then(function (dir) {
-          tempDir = dir;
-          return resolver._cleanTempDir();
+            tempDir = dir;
+            return resolver._cleanTempDir();
         })
         .then(function (dir) {
-          expect(dir).to.equal(tempDir);
-          next();
+            expect(dir).to.equal(tempDir);
+            next();
         })
         .done();
-    });
-  });
-
-  describe('._readJson', function () {
-    afterEach(function (next) {
-      rimraf(tempDir, next);
+        });
     });
 
-    it('should read the bower.json file', function (next) {
-      var resolver = create('foo');
+    describe('._readJson', function () {
+        afterEach(function (next) {
+            rimraf(tempDir, next);
+        });
 
-      mkdirp.sync(tempDir);
-      fs.writeFileSync(path.join(tempDir, 'bower.json'), JSON.stringify({name: 'foo', version: '0.0.0'}));
-      fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+        it('should read the ano.json file', function (next) {
+            var resolver = create('foo');
 
-      resolver._readJson(tempDir)
+            mkdirp.sync(tempDir);
+            fs.writeFileSync(path.join(tempDir, 'ano.json'), JSON.stringify({name: 'foo', version: '0.0.0'}));
+            fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+
+            resolver._readJson(tempDir)
         .then(function (meta) {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('foo');
-          expect(meta.version).to.equal('0.0.0');
-          next();
+            expect(meta).to.be.an('object');
+            expect(meta.name).to.equal('foo');
+            expect(meta.version).to.equal('0.0.0');
+            next();
         })
         .done();
-    });
+        });
 
-    it('should fallback to component.json (notifying a warn)', function (next) {
-      var resolver = create('foo');
-      var notified = false;
+        it('should fallback to component.json (notifying a warn)', function (next) {
+            var resolver = create('foo');
+            var notified = false;
 
-      mkdirp.sync(tempDir);
-      fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+            mkdirp.sync(tempDir);
+            fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
 
-      logger.on('log', function (log) {
-        expect(log).to.be.an('object');
-        if (log.level === 'warn' && /deprecated/i.test(log.id)) {
-          expect(log.message).to.contain('component.json');
-          notified = true;
-        }
-      });
+            logger.on('log', function (log) {
+                expect(log).to.be.an('object');
+                if (log.level === 'warn' && /deprecated/i.test(log.id)) {
+                    expect(log.message).to.contain('component.json');
+                    notified = true;
+                }
+            });
 
-      resolver._readJson(tempDir)
+            resolver._readJson(tempDir)
         .then(function (meta) {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('bar');
-          expect(meta.version).to.equal('0.0.0');
-          expect(notified).to.be(true);
-          next();
+            expect(meta).to.be.an('object');
+            expect(meta.name).to.equal('bar');
+            expect(meta.version).to.equal('0.0.0');
+            expect(notified).to.be(true);
+            next();
         })
         .done();
-    });
+        });
 
-    it('should resolve to an inferred json if no json file was found', function (next) {
-      var resolver = create('foo');
+        it('should resolve to an inferred json if no json file was found', function (next) {
+            var resolver = create('foo');
 
-      resolver._readJson(tempDir)
+            resolver._readJson(tempDir)
         .then(function (meta) {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('foo');
-          next();
+            expect(meta).to.be.an('object');
+            expect(meta.name).to.equal('foo');
+            next();
         })
         .done();
+        });
+
+        it.skip('should apply normalisation, defaults and validation to the json object');
     });
 
-    it.skip('should apply normalisation, defaults and validation to the json object');
-  });
+    describe('._applyPkgMeta', function () {
+        afterEach(function (next) {
+            rimraf(tempDir, next);
+        });
 
-  describe('._applyPkgMeta', function () {
-    afterEach(function (next) {
-      rimraf(tempDir, next);
-    });
+        it('should resolve with the same package meta', function (next) {
+            var resolver = create('foo');
+            var meta = {name: 'foo'};
 
-    it('should resolve with the same package meta', function (next) {
-      var resolver = create('foo');
-      var meta = {name: 'foo'};
+            mkdirp.sync(tempDir);
+            resolver._tempDir = tempDir;
 
-      mkdirp.sync(tempDir);
-      resolver._tempDir = tempDir;
-
-      resolver._applyPkgMeta(meta)
+            resolver._applyPkgMeta(meta)
         .then(function (retMeta) {
-          expect(retMeta).to.equal(meta);
+            expect(retMeta).to.equal(meta);
 
           // Test also with the ignore property because the code is different
-          meta = {name: 'foo', ignore: ['somefile']};
+            meta = {name: 'foo', ignore: ['somefile']};
 
-          return resolver._applyPkgMeta(meta)
+            return resolver._applyPkgMeta(meta)
             .then(function (retMeta) {
-              expect(retMeta).to.equal(meta);
-              next();
+                expect(retMeta).to.equal(meta);
+                next();
             });
         })
         .done();
-    });
+        });
 
-    it('should remove files that match the ignore patterns excluding main files', function (next) {
-      var resolver = create({source: 'foo', name: 'foo'});
+        it('should remove files that match the ignore patterns excluding main files', function (next) {
+            var resolver = create({source: 'foo', name: 'foo'});
 
-      mkdirp.sync(tempDir);
+            mkdirp.sync(tempDir);
 
-      // Checkout test package version 0.2.1 which has a bower.json
+      // Checkout test package version 0.2.1 which has a ano.json
       // with ignores
-      cmd('git', ['checkout', '0.2.2'], {cwd: testPackage})
+            cmd('git', ['checkout', '0.2.2'], {cwd: testPackage})
       // Copy its contents to the temporary dir
         .then(function () {
-          return copy.copyDir(testPackage, tempDir);
+            return copy.copyDir(testPackage, tempDir);
         })
         .then(function () {
-          var json;
+            var json;
 
           // This is a very rudimentary check
           // Complete checks are made in the 'describe' below
-          resolver._tempDir = tempDir;
-          json = JSON.parse(fs.readFileSync(path.join(tempDir, 'bower.json')).toString());
+            resolver._tempDir = tempDir;
+            json = JSON.parse(fs.readFileSync(path.join(tempDir, 'ano.json')).toString());
 
-          return resolver._applyPkgMeta(json)
+            return resolver._applyPkgMeta(json)
             .then(function () {
-              expect(fs.existsSync(path.join(tempDir, 'foo'))).to.be(true);
-              expect(fs.existsSync(path.join(tempDir, 'baz'))).to.be(true);
-              expect(fs.existsSync(path.join(tempDir, 'test'))).to.be(false);
-              expect(fs.existsSync(path.join(tempDir, 'bower.json'))).to.be(true);
-              expect(fs.existsSync(path.join(tempDir, 'main.js'))).to.be(true);
-              expect(fs.existsSync(path.join(tempDir, 'more/docs'))).to.be(false);
-              expect(fs.existsSync(path.join(tempDir, 'more/assets'))).to.be(false);
-              next();
+                expect(fs.existsSync(path.join(tempDir, 'foo'))).to.be(true);
+                expect(fs.existsSync(path.join(tempDir, 'baz'))).to.be(true);
+                expect(fs.existsSync(path.join(tempDir, 'test'))).to.be(false);
+                expect(fs.existsSync(path.join(tempDir, 'ano.json'))).to.be(true);
+                expect(fs.existsSync(path.join(tempDir, 'main.js'))).to.be(true);
+                expect(fs.existsSync(path.join(tempDir, 'more/docs'))).to.be(false);
+                expect(fs.existsSync(path.join(tempDir, 'more/assets'))).to.be(false);
+                next();
             });
         })
         .done();
-    });
+        });
 
-    describe('handling of ignore property according to the .gitignore spec', function () {
-      it.skip('A blank line matches no files, so it can serve as a separator for readability.');
-      it.skip('A line starting with # serves as a comment.');
-      it.skip('An optional prefix ! which negates the pattern; any matching file excluded by a previous pattern will become included again...', function () {
+        describe('handling of ignore property according to the .gitignore spec', function () {
+            it.skip('A blank line matches no files, so it can serve as a separator for readability.');
+            it.skip('A line starting with # serves as a comment.');
+            it.skip('An optional prefix ! which negates the pattern; any matching file excluded by a previous pattern will become included again...', function () {
         // If a negated pattern matches, this will override lower precedence patterns sources. Put a backslash ("\") in front of the first "!" for patterns that begin with a literal "!", for example, "\!important!.txt".
-      });
-      it.skip('If the pattern ends with a slash, it is removed for the purpose of the following description, but it would only find a match with a directory...', function () {
+            });
+            it.skip('If the pattern ends with a slash, it is removed for the purpose of the following description, but it would only find a match with a directory...', function () {
         // In other words, foo/ will match a directory foo and paths underneath it, but will not match a regular file or a symbolic link foo (this is consistent with the way how pathspec works in general in git).
-      });
-      it.skip('If the pattern does not contain a slash /, git treats it as a shell glob pattern and checks for a match against the pathname without leading directories.');
-      it.skip('Otherwise, git treats the pattern as a shell glob suitable for consumption by fnmatch(3) with the FNM_PATHNAME flag..', function () {
+            });
+            it.skip('If the pattern does not contain a slash /, git treats it as a shell glob pattern and checks for a match against the pathname without leading directories.');
+            it.skip('Otherwise, git treats the pattern as a shell glob suitable for consumption by fnmatch(3) with the FNM_PATHNAME flag..', function () {
         // wildcards in the pattern will not match a / in the pathname. For example, "Documentation/*.html" matches "Documentation/git.html" but not "Documentation/ppc/ppc.html" or "tools/perf/Documentation/perf.html".
-      });
-    });
-  });
-
-  describe('._savePkgMeta', function () {
-    before(function () {
-      mkdirp.sync(tempDir);
+            });
+        });
     });
 
-    afterEach(function (next) {
-      rimraf(path.join(tempDir, '.bower.json'), next);
-    });
+    describe('._savePkgMeta', function () {
+        before(function () {
+            mkdirp.sync(tempDir);
+        });
 
-    after(function (next) {
-      rimraf(tempDir, next);
-    });
+        afterEach(function (next) {
+            rimraf(path.join(tempDir, '.ano.json'), next);
+        });
 
-    it('should resolve with the same package meta', function (next) {
-      var resolver = create('foo');
-      var meta = {name: 'foo'};
+        after(function (next) {
+            rimraf(tempDir, next);
+        });
 
-      resolver._tempDir = tempDir;
+        it('should resolve with the same package meta', function (next) {
+            var resolver = create('foo');
+            var meta = {name: 'foo'};
 
-      resolver._savePkgMeta(meta)
+            resolver._tempDir = tempDir;
+
+            resolver._savePkgMeta(meta)
         .then(function (retMeta) {
-          expect(retMeta).to.equal(meta);
-          next();
-        })
-        .done();
-    });
-
-    it('should set the original source and target in package meta file', function (next) {
-      var resolver = create({source: 'bar', target: '~2.0.0'});
-      var meta = {name: 'foo'};
-
-      resolver._tempDir = tempDir;
-
-      resolver._savePkgMeta(meta)
-        .then(function (retMeta) {
-          expect(retMeta._source).to.equal('bar');
-          expect(retMeta._target).to.equal('~2.0.0');
-          next();
-        })
-        .done();
-    });
-
-    it('should save the package meta to the package meta file (.bower.json)', function (next) {
-      var resolver = create('foo');
-
-      resolver._tempDir = tempDir;
-
-      resolver._savePkgMeta({name: 'bar'})
-        .then(function (retMeta) {
-          fs.readFile(path.join(tempDir, '.bower.json'), function (err, contents) {
-            if (err) return next(err);
-
-            contents = contents.toString();
-            expect(JSON.parse(contents)).to.eql(retMeta);
+            expect(retMeta).to.equal(meta);
             next();
-          });
         })
         .done();
-    });
-  });
+        });
 
-  describe('#isTargetable', function () {
-    it('should return true by default', function () {
-      expect(Resolver.isTargetable()).to.be(true);
-    });
-  });
+        it('should set the original source and target in package meta file', function (next) {
+            var resolver = create({source: 'bar', target: '~2.0.0'});
+            var meta = {name: 'foo'};
 
-  describe('#versions', function () {
-    it('should resolve to an array by default', function (next) {
-      Resolver.versions()
+            resolver._tempDir = tempDir;
+
+            resolver._savePkgMeta(meta)
+        .then(function (retMeta) {
+            expect(retMeta._source).to.equal('bar');
+            expect(retMeta._target).to.equal('~2.0.0');
+            next();
+        })
+        .done();
+        });
+
+        it('should save the package meta to the package meta file (.ano.json)', function (next) {
+            var resolver = create('foo');
+
+            resolver._tempDir = tempDir;
+
+            resolver._savePkgMeta({name: 'bar'})
+        .then(function (retMeta) {
+            fs.readFile(path.join(tempDir, '.ano.json'), function (err, contents) {
+                if (err) return next(err);
+
+                contents = contents.toString();
+                expect(JSON.parse(contents)).to.eql(retMeta);
+                next();
+            });
+        })
+        .done();
+        });
+    });
+
+    describe('#isTargetable', function () {
+        it('should return true by default', function () {
+            expect(Resolver.isTargetable()).to.be(true);
+        });
+    });
+
+    describe('#versions', function () {
+        it('should resolve to an array by default', function (next) {
+            Resolver.versions()
         .then(function (versions) {
-          expect(versions).to.be.an('array');
-          expect(versions.length).to.be(0);
+            expect(versions).to.be.an('array');
+            expect(versions.length).to.be(0);
 
-          next();
+            next();
         })
         .done();
+        });
+
     });
 
-  });
+    describe('#isCacheable', function () {
+        it('caches for normal name', function () {
+            var resolver = new Resolver({source: 'foo'});
+            expect(resolver.isCacheable()).to.be(true);
+        });
 
-  describe('#isCacheable', function () {
-    it('caches for normal name', function () {
-      var resolver = new Resolver({source: 'foo'});
-      expect(resolver.isCacheable()).to.be(true);
-    });
+        it('does not cache for absolute paths', function () {
+            var resolver = new Resolver({source: '/foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
 
-    it('does not cache for absolute paths', function () {
-      var resolver = new Resolver({source: '/foo'});
-      expect(resolver.isCacheable()).to.be(false);
-    });
+        it('does not cache for relative paths', function () {
+            var resolver = new Resolver({source: './foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
 
-    it('does not cache for relative paths', function () {
-      var resolver = new Resolver({source: './foo'});
-      expect(resolver.isCacheable()).to.be(false);
-    });
+        it('does not cache for parent paths', function () {
+            var resolver = new Resolver({source: '../foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
 
-    it('does not cache for parent paths', function () {
-      var resolver = new Resolver({source: '../foo'});
-      expect(resolver.isCacheable()).to.be(false);
-    });
+        it('does not cache for file:/// prefix', function () {
+            var resolver = new Resolver({source: 'file:///foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
 
-    it('does not cache for file:/// prefix', function () {
-      var resolver = new Resolver({source: 'file:///foo'});
-      expect(resolver.isCacheable()).to.be(false);
-    });
+        it('does not cache for windows paths', function () {
+            var resolver = new Resolver({source: '..\\foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
 
-    it('does not cache for windows paths', function () {
-      var resolver = new Resolver({source: '..\\foo'});
-      expect(resolver.isCacheable()).to.be(false);
+        it('does not cache for windows absolute paths', function () {
+            var resolver = new Resolver({source: 'C:\\foo'});
+            expect(resolver.isCacheable()).to.be(false);
+        });
     });
-
-    it('does not cache for windows absolute paths', function () {
-      var resolver = new Resolver({source: 'C:\\foo'});
-      expect(resolver.isCacheable()).to.be(false);
-    });
-  });
 });

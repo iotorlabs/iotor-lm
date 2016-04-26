@@ -38,13 +38,13 @@ See complete command line reference at [bower.io/docs/api/](http://bower.io/docs
 ### Installing packages and dependencies
 
 ```sh
-# install dependencies listed in bower.json
+# install dependencies listed in ano.json
 $ bower install
 
-# install a package and add it to bower.json
+# install a package and add it to ano.json
 $ bower install <package> --save
 
-# install specific version of a package and add it to bower.json
+# install specific version of a package and add it to ano.json
 $ bower install <package>#<version> --save
 ```
 
@@ -95,7 +95,7 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 ## Configuration
 
-Bower can be configured using JSON in a `.bowerrc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
+Bower can be configured using JSON in a `.anorc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
 
 
 ## Support

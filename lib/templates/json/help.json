@@ -4,10 +4,10 @@
   ],
   "commands": {
     "cache": "Manage bower cache",
-    "help": "Display help information about Bower",
+    "help": "Display help information about Ano",
     "home": "Opens a package homepage into your favorite browser",
     "info": "Info of a particular package",
-    "init": "Interactively create a bower.json file",
+    "init": "Interactively create a ano.json file",
     "install": "Install a package locally",
     "link": "Symlink a package folder",
     "list": "List local packages - and possible updates",
@@ -64,7 +64,7 @@
     {
       "shorthand": "-v",
       "flag": "--version",
-      "description": "Output Bower version"
+      "description": "Output Ano version"
     },
     {
       "flag": "--no-color",

@@ -68,7 +68,7 @@ module.exports = function (grunt) {
     grunt.registerTask('travis', ['eslint', 'exec:assets', 'exec:cover', 'exec:coveralls']);
     grunt.registerTask('default', 'test');
 
-    grunt.task.registerTask('publish', 'Perform final checks and publish Bower', function () {
+    grunt.task.registerTask('publish', 'Perform final checks and publish anom', function () {
         var npmVersion = JSON.parse(childProcess.execSync('npm version --json').toString()).npm.split('.');
         var npmMajor = parseInt(npmVersion[0], 10);
         var npmMinor = parseInt(npmVersion[1], 10);
@@ -138,7 +138,7 @@ module.exports = function (grunt) {
         grunt.log.writeln('Testing bower on sample project...');
 
         childProcess.execSync(
-            'cd test/sample && rm -rf bower_components && ' + dir + '/bin/bower install --force', { stdio: [0, 1, 2] }
+            'cd test/sample && rm -rf ano_libraries && ' + dir + '/bin/bower install --force', { stdio: [0, 1, 2] }
         );
 
         var expectedPackages = (
@@ -150,7 +150,7 @@ module.exports = function (grunt) {
             'requirejs restangular slimScroll slimScrollHorizontal venturocket-angular-slider'
         ).split(' ');
 
-        var installedPackages = fs.readdirSync('./test/sample/bower_components');
+        var installedPackages = fs.readdirSync('./test/sample/ano_libraries');
 
         var installedDiff = arraydiff(expectedPackages, installedPackages);
 
@@ -161,7 +161,7 @@ module.exports = function (grunt) {
             process.exit(1);
         }
 
-        grunt.log.writeln('\nBower production bundle installed in:');
+        grunt.log.writeln('\nanom production bundle installed in:');
         grunt.log.writeln(dir + '\n');
 
         var questions = [
@@ -201,8 +201,8 @@ module.exports = function (grunt) {
             }
 
             grunt.log.writeln('\nPlease remember to tag this relese, and add a release on Github!');
-            grunt.log.writeln('\nAlso, please remember to test published Bower one more time!');
-            grunt.log.writeln('\nPublishing Bower...');
+            grunt.log.writeln('\nAlso, please remember to test published Ano one more time!');
+            grunt.log.writeln('\nPublishing Ano...');
 
             childProcess.execSync('npm publish --tag beta', { cwd: dir, stdio: [0, 1, 2] });
 

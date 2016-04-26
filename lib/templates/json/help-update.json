@@ -1,6 +1,6 @@
 {
   "command": "update",
-  "description": "Updates installed packages to their newest version according to bower.json.",
+  "description": "Updates installed packages to their newest version according to ano.json.",
   "usage": [
     "update <name> [<name> ..] [<options>]"
   ],
@@ -23,12 +23,12 @@
     {
       "shorthand": "-S",
       "flag": "--save",
-      "description": "Update dependencies in bower.json"
+      "description": "Update dependencies in ano.json"
     },
     {
       "shorthand": "-D",
       "flag": "--save-dev",
-      "description": "Update devDependencies in bower.json"
+      "description": "Update devDependencies in ano.json"
     }
   ]
 }

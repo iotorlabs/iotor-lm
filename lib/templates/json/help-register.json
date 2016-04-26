@@ -8,7 +8,7 @@
     {
       "shorthand": "-f",
       "flag": "--force",
-      "description": "Bypasses confirmation. Bower login is still needed."
+      "description": "Bypasses confirmation. Ano login is still needed."
     },
     {
       "shorthand": "-h",
