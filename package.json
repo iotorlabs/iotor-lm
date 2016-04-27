@@ -1,7 +1,7 @@
 {
   "name": "anom",
-  "version": "1.7.9",
-  "description": "Arduino Library and Hardware manager",
+  "version": "1.8.0-alpha.0",
+  "description": "Arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
   "repository": "taoyuan/anom",
