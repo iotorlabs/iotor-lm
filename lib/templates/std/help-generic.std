@@ -1,6 +1,4 @@
-
 Usage:
-
 {{#condense}}
 {{#each usage}}
     {{#cyan}}{{@root.bin}}{{/cyan}} {{.}}
@@ -9,7 +7,6 @@ Usage:
 
 
 Options:
-
 {{#condense}}
 {{#each options}}
     {{#yellow}}{{#rpad minLength="23"}}{{#if shorthand}}{{shorthand}}, {{/if}}{{flag}}{{/rpad}}{{/yellow}} {{description}}
@@ -19,5 +16,4 @@ Options:
     Additionally all global options listed in '{{@root.bin}} help' are available
 
 Description:
-
     {{#indent level="4"}}{{description}}{{/indent}}

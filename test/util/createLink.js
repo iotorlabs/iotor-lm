@@ -7,51 +7,51 @@ var createLink = require('../../lib/util/createLink');
 
 describe('createLink', function () {
 
-    var srcDir = new helpers.TempDir({
-        someFile: 'Hello World',
-        someDirectory: {
-            otherFile: 'Hello World'
-        }
-    });
+  var srcDir = new helpers.TempDir({
+    someFile: 'Hello World',
+    someDirectory: {
+      otherFile: 'Hello World'
+    }
+  });
 
-    var dstDir = new helpers.TempDir();
+  var dstDir = new helpers.TempDir();
 
-    beforeEach(function () {
-        srcDir.prepare();
-        dstDir.prepare();
-    });
+  beforeEach(function () {
+    srcDir.prepare();
+    dstDir.prepare();
+  });
 
-    it('creates a symlink to a file', function () {
+  it('creates a symlink to a file', function () {
 
-        var src = path.join(srcDir.path, 'someFile'),
-            dst = path.join(dstDir.path, 'someFile');
+    var src = path.join(srcDir.path, 'someFile'),
+      dst = path.join(dstDir.path, 'someFile');
 
-        return createLink(src, dst)
+    return createLink(src, dst)
       .then(function () {
-          return Q.nfcall(fs.readlink, dst)
+        return Q.nfcall(fs.readlink, dst)
           .then(function (linkString) {
-              expect(linkString).to.be.equal(src);
+            expect(linkString).to.be.equal(src);
           });
       });
-    });
+  });
 
-    it('throws an error when destination already exists', function () {
+  it('throws an error when destination already exists', function () {
 
-        var src = path.join(srcDir.path, 'someFile'),
-            dst = path.join(dstDir.path);
+    var src = path.join(srcDir.path, 'someFile'),
+      dst = path.join(dstDir.path);
 
-        var deferred = Q.defer();
+    var deferred = Q.defer();
 
-        createLink(src, dst)
+    createLink(src, dst)
       .catch(function (err) {
-          expect(err.code).to.be.equal('EEXIST');
-          deferred.resolve();
+        expect(err.code).to.be.equal('EEXIST');
+        deferred.resolve();
       })
       .then(function () {
-          deferred.reject();
+        deferred.reject();
       });
 
-        return deferred.promise;
-    });
+    return deferred.promise;
+  });
 
 });

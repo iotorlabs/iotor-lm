@@ -7,8 +7,8 @@
 
 
 {{#if hidePreReleases}}
-Show {{numPreReleases}} additional prereleases with ‘bower info {{name}} --verbose’
+Show {{numPreReleases}} additional prereleases with ‘alm info {{name}} --verbose’
 {{/if}}
-You can request info for a specific version with 'bower info {{name}}#<version>'
+You can request info for a specific version with 'alm info {{name}}#<version>'
 {{else}}No versions available.
 {{/if}}

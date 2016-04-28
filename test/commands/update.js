@@ -6,389 +6,389 @@ var updateCmd = helpers.command('update');
 var commands = helpers.require('lib/index').commands;
 
 describe('bower update', function () {
-    this.timeout(10000);
+  this.timeout(10000);
 
-    var tempDir = new helpers.TempDir();
+  var tempDir = new helpers.TempDir();
 
-    var subPackage = new helpers.TempDir({
-        'ano.json': {
-            name: 'subPackage'
+  var subPackage = new helpers.TempDir({
+    'ano.json': {
+      name: 'subPackage'
+    }
+  }).prepare();
+
+  var gitPackage = new helpers.TempDir();
+
+  gitPackage.prepareGit({
+    '1.0.0': {
+      'ano.json': {
+        name: 'package'
+      },
+      'version.txt': '1.0.0'
+    },
+    '1.0.1': {
+      'ano.json': {
+        name: 'package',
+        dependencies: {
+          subPackage: subPackage.path
         }
-    }).prepare();
+      },
+      'version.txt': '1.0.1'
+    }
+  });
 
-    var gitPackage = new helpers.TempDir();
+  var mainPackage = new helpers.TempDir({
+    'ano.json': {
+      name: 'package'
+    }
+  }).prepare();
 
-    gitPackage.prepareGit({
-        '1.0.0': {
-            'ano.json': {
-                name: 'package'
-            },
-            'version.txt': '1.0.0'
-        },
-        '1.0.1': {
-            'ano.json': {
-                name: 'package',
-                dependencies: {
-                    subPackage: subPackage.path
-                }
-            },
-            'version.txt': '1.0.1'
-        }
+  var updateLogger = function (packages, options, config) {
+    config = object.merge(config || {}, {
+      cwd: tempDir.path
     });
 
-    var mainPackage = new helpers.TempDir({
-        'ano.json': {
-            name: 'package'
-        }
-    }).prepare();
+    return commands.update(packages, options, config);
+  };
 
-    var updateLogger = function (packages, options, config) {
-        config = object.merge(config || {}, {
-            cwd: tempDir.path
-        });
+  var update = function (packages, options, config) {
+    var logger = updateLogger(packages, options, config);
 
-        return commands.update(packages, options, config);
-    };
+    return helpers.expectEvent(logger, 'end');
+  };
 
-    var update = function (packages, options, config) {
-        var logger = updateLogger(packages, options, config);
+  var install = function (packages, options, config) {
+    config = object.merge(config || {}, {
+      cwd: tempDir.path
+    });
 
-        return helpers.expectEvent(logger, 'end');
-    };
-
-    var install = function (packages, options, config) {
-        config = object.merge(config || {}, {
-            cwd: tempDir.path
-        });
-
-        var logger = commands.install(
+    var logger = commands.install(
       packages, options, config
     );
 
-        return helpers.expectEvent(logger, 'end');
-    };
+    return helpers.expectEvent(logger, 'end');
+  };
 
-    it('correctly reads arguments', function () {
-        expect(updateCmd.readOptions(['jquery', '-F', '-p']))
+  it('correctly reads arguments', function () {
+    expect(updateCmd.readOptions(['jquery', '-F', '-p']))
       .to.eql([['jquery'], {forceLatest: true, production: true}]);
+  });
+
+  it('install missing packages', function () {
+    mainPackage.prepare();
+
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: mainPackage.path
+        }
+      }
     });
 
-    it('install missing packages', function () {
-        mainPackage.prepare();
+    return update().then(function () {
+      expect(tempDir.exists('ano_libraries/package/ano.json')).to.equal(true);
+      expect(tempDir.read('ano_libraries/package/ano.json')).to.contain('"name": "package"');
+    });
+  });
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: mainPackage.path
-                }
-            }
-        });
+  it('does not install ignored dependencies', function () {
+    var package3 = new helpers.TempDir({
+      'ano.json': {
+        name: 'package3'
+      }
+    }).prepare();
 
-        return update().then(function () {
-            expect(tempDir.exists('ano_libraries/package/ano.json')).to.equal(true);
-            expect(tempDir.read('ano_libraries/package/ano.json')).to.contain('"name": "package"');
-        });
+    var package2 = new helpers.TempDir({
+      'ano.json': {
+        name: 'package2',
+        dependencies: {
+          package3: package3.path
+        }
+      }
+    }).prepare();
+
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package2: package2.path
+        }
+      },
+      '.anorc': {
+        ignoredDependencies: ['package3']
+      }
     });
 
-    it('does not install ignored dependencies', function () {
-        var package3 = new helpers.TempDir({
-            'ano.json': {
-                name: 'package3'
-            }
-        }).prepare();
+    return update().then(function () {
+      expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
+      expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+    });
+  });
 
-        var package2 = new helpers.TempDir({
-            'ano.json': {
-                name: 'package2',
-                dependencies: {
-                    package3: package3.path
-                }
-            }
-        }).prepare();
+  it('does not install ignored dependencies if run multiple times', function () {
+    var package3 = new helpers.TempDir({
+      'ano.json': {
+        name: 'package3'
+      }
+    }).prepare();
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package2: package2.path
-                }
-            },
-            '.anorc': {
-                ignoredDependencies: ['package3']
-            }
-        });
+    var package2 = new helpers.TempDir({
+      'ano.json': {
+        name: 'package2',
+        dependencies: {
+          package3: package3.path
+        }
+      }
+    }).prepare();
 
-        return update().then(function () {
-            expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
-            expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
-        });
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package2: package2.path
+        }
+      },
+      '.anorc': {
+        ignoredDependencies: ['package3']
+      }
     });
 
-    it('does not install ignored dependencies if run multiple times', function () {
-        var package3 = new helpers.TempDir({
-            'ano.json': {
-                name: 'package3'
-            }
-        }).prepare();
-
-        var package2 = new helpers.TempDir({
-            'ano.json': {
-                name: 'package2',
-                dependencies: {
-                    package3: package3.path
-                }
-            }
-        }).prepare();
-
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package2: package2.path
-                }
-            },
-            '.anorc': {
-                ignoredDependencies: ['package3']
-            }
-        });
-
-        return update().then(function () {
-            return update().then(function () {
-                expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
-                expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
-            });
-        });
-
+    return update().then(function () {
+      return update().then(function () {
+        expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
+        expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+      });
     });
 
-    it('runs preinstall hook when installing missing package', function () {
-        mainPackage.prepare();
+  });
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: mainPackage.path
-                }
-            },
-            '.anorc': {
-                scripts: {
-                    preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
-                }
-            }
-        });
+  it('runs preinstall hook when installing missing package', function () {
+    mainPackage.prepare();
 
-        return update().then(function () {
-            expect(tempDir.read('preinstall.txt')).to.be('package');
-        });
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: mainPackage.path
+        }
+      },
+      '.anorc': {
+        scripts: {
+          preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
+        }
+      }
     });
 
-    it('runs postinstall hook when installing missing package', function () {
-        mainPackage.prepare();
+    return update().then(function () {
+      expect(tempDir.read('preinstall.txt')).to.be('package');
+    });
+  });
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: mainPackage.path
-                }
-            },
-            '.anorc': {
-                scripts: {
-                    postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
-                }
-            }
-        });
+  it('runs postinstall hook when installing missing package', function () {
+    mainPackage.prepare();
 
-        return update().then(function () {
-            expect(tempDir.read('postinstall.txt')).to.be('package');
-        });
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: mainPackage.path
+        }
+      },
+      '.anorc': {
+        scripts: {
+          postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
+        }
+      }
     });
 
-    it('doesn\'t runs postinstall when no package is update', function () {
-        mainPackage.prepare();
+    return update().then(function () {
+      expect(tempDir.read('postinstall.txt')).to.be('package');
+    });
+  });
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: mainPackage.path
-                }
-            },
-            '.anorc': {
-                scripts: {
-                    postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
-                }
-            }
-        });
+  it('doesn\'t runs postinstall when no package is update', function () {
+    mainPackage.prepare();
 
-        return install().then(function () {
-            tempDir.prepare();
-
-            return update().then(function () {
-                expect(tempDir.exists('postinstall.txt')).to.be(false);
-            });
-        });
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: mainPackage.path
+        }
+      },
+      '.anorc': {
+        scripts: {
+          postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
+        }
+      }
     });
 
-    it('updates a package', function () {
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: gitPackage.path + '#1.0.0'
-                }
-            }
-        });
+    return install().then(function () {
+      tempDir.prepare();
 
-        return install().then(function () {
+      return update().then(function () {
+        expect(tempDir.exists('postinstall.txt')).to.be(false);
+      });
+    });
+  });
 
-            expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.0');
-
-            tempDir.prepare({
-                'ano.json': {
-                    name: 'test',
-                    dependencies: {
-                        package: gitPackage.path + '#1.0.1'
-                    }
-                }
-            });
-
-            return update().then(function () {
-                expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.1');
-            });
-        });
+  it('updates a package', function () {
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: gitPackage.path + '#1.0.0'
+        }
+      }
     });
 
-    it('does not install ignored dependencies when updating a package', function () {
-        this.timeout(15000);
+    return install().then(function () {
 
-        var package3 = new helpers.TempDir({
-            'ano.json': {
-                name: 'package3'
-            }
-        }).prepare();
+      expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.0');
 
-        var package2 = new helpers.TempDir().prepareGit({
-            '1.0.0': {
-                'ano.json': {
-                    name: 'package2',
-                    version: '1.0.0',
-                    dependencies: {
-                        package3: package3.path
-                    }
-                }
-            },
-            '1.0.1': {
-                'ano.json': {
-                    name: 'package2',
-                    version: '1.0.1',
-                    dependencies: {
-                        package3: package3.path
-                    }
-                }
-            }
-        });
+      tempDir.prepare({
+        'ano.json': {
+          name: 'test',
+          dependencies: {
+            package: gitPackage.path + '#1.0.1'
+          }
+        }
+      });
 
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package2: package2.path + '#1.0.0'
-                }
-            },
-            '.anorc': {
-                ignoredDependencies: ['package3']
-            }
-        });
+      return update().then(function () {
+        expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.1');
+      });
+    });
+  });
 
-        return install().then(function () {
+  it('does not install ignored dependencies when updating a package', function () {
+    this.timeout(15000);
 
-            expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.0');
-            expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+    var package3 = new helpers.TempDir({
+      'ano.json': {
+        name: 'package3'
+      }
+    }).prepare();
 
-            tempDir.prepare({
-                'ano.json': {
-                    name: 'test',
-                    dependencies: {
-                        package2: package2.path + '#1.0.1'
-                    }
-                },
-                '.anorc': {
-                    ignoredDependencies: ['package3']
-                }
-            });
-
-            return update().then(function () {
-                expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.1');
-                expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
-            });
-        });
+    var package2 = new helpers.TempDir().prepareGit({
+      '1.0.0': {
+        'ano.json': {
+          name: 'package2',
+          version: '1.0.0',
+          dependencies: {
+            package3: package3.path
+          }
+        }
+      },
+      '1.0.1': {
+        'ano.json': {
+          name: 'package2',
+          version: '1.0.1',
+          dependencies: {
+            package3: package3.path
+          }
+        }
+      }
     });
 
-    it('runs preinstall hook when updating a package', function () {
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: gitPackage.path + '#1.0.0'
-                }
-            }
-        });
-
-        return install().then(function () {
-            tempDir.prepare({
-                'ano.json': {
-                    name: 'test',
-                    dependencies: {
-                        package: gitPackage.path + '#1.0.1'
-                    }
-                },
-                '.anorc': {
-                    scripts: {
-                        preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
-                    }
-                }
-            });
-
-            expect(tempDir.exists('preinstall.txt')).to.be(false);
-            return update().then(function () {
-                expect(tempDir.read('preinstall.txt')).to.be('subPackage package');
-            });
-        });
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package2: package2.path + '#1.0.0'
+        }
+      },
+      '.anorc': {
+        ignoredDependencies: ['package3']
+      }
     });
 
-    it('runs postinstall hook when updating a package', function () {
-        tempDir.prepare({
-            'ano.json': {
-                name: 'test',
-                dependencies: {
-                    package: gitPackage.path + '#1.0.0'
-                }
-            }
-        });
+    return install().then(function () {
 
-        return install().then(function () {
-            tempDir.prepare({
-                'ano.json': {
-                    name: 'test',
-                    dependencies: {
-                        package: gitPackage.path + '#1.0.1'
-                    }
-                },
-                '.anorc': {
-                    scripts: {
-                        preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\'',
-                        postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
-                    }
-                }
-            });
+      expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.0');
+      expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
 
-            expect(tempDir.exists('postinstall.txt')).to.be(false);
-            return update().then(function () {
-                expect(tempDir.read('postinstall.txt')).to.be('subPackage package');
-            });
-        });
+      tempDir.prepare({
+        'ano.json': {
+          name: 'test',
+          dependencies: {
+            package2: package2.path + '#1.0.1'
+          }
+        },
+        '.anorc': {
+          ignoredDependencies: ['package3']
+        }
+      });
+
+      return update().then(function () {
+        expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.1');
+        expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+      });
     });
+  });
+
+  it('runs preinstall hook when updating a package', function () {
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: gitPackage.path + '#1.0.0'
+        }
+      }
+    });
+
+    return install().then(function () {
+      tempDir.prepare({
+        'ano.json': {
+          name: 'test',
+          dependencies: {
+            package: gitPackage.path + '#1.0.1'
+          }
+        },
+        '.anorc': {
+          scripts: {
+            preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
+          }
+        }
+      });
+
+      expect(tempDir.exists('preinstall.txt')).to.be(false);
+      return update().then(function () {
+        expect(tempDir.read('preinstall.txt')).to.be('subPackage package');
+      });
+    });
+  });
+
+  it('runs postinstall hook when updating a package', function () {
+    tempDir.prepare({
+      'ano.json': {
+        name: 'test',
+        dependencies: {
+          package: gitPackage.path + '#1.0.0'
+        }
+      }
+    });
+
+    return install().then(function () {
+      tempDir.prepare({
+        'ano.json': {
+          name: 'test',
+          dependencies: {
+            package: gitPackage.path + '#1.0.1'
+          }
+        },
+        '.anorc': {
+          scripts: {
+            preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\'',
+            postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
+          }
+        }
+      });
+
+      expect(tempDir.exists('postinstall.txt')).to.be(false);
+      return update().then(function () {
+        expect(tempDir.read('postinstall.txt')).to.be('subPackage package');
+      });
+    });
+  });
 });

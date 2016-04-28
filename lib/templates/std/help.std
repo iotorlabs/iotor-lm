@@ -21,5 +21,4 @@ Options:
 {{/each}}
 {{/condense}}
 
-
 See '{{bin}} help <command>' for more information on a specific command.

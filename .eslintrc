@@ -19,7 +19,7 @@
     "comma-spacing": 2,
     "quote-props": [2, "consistent", { "keywords": true }],
     "quotes": [2, "single", "avoid-escape"],
-    "indent": [2, 4],
+    "indent": [2, 2],
     "no-cond-assign": [ 2, "except-parens" ],
     "no-debugger": 2,
     "no-dupe-args": 2,
