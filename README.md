@@ -1,11 +1,10 @@
-# ano-lm - A arduino library manager
+# ano-lm: An arduino library manager
 
 > ano-lm needs is forked from [Bower](https://github.com/bower/bower)
 
 [![Build Status](https://travis-ci.org/taoyuan/ano-lm.svg?branch=master)](https://travis-ci.org/taoyuan/ano-lm)
 [![Windows Build](https://ci.appveyor.com/api/projects/status/jr6vfra8w84plh2g/branch/master?svg=true)](https://ci.appveyor.com/project/sheerun/bower/history)
 [![Coverage Status](https://img.shields.io/coveralls/taoyuan/ano-lm.svg)](https://coveralls.io/r/taoyuan/ano-lm?branch=master)
-[![Discord chat](https://img.shields.io/badge/discord-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://discord.gg/0fFM7QF0KpZRh2cY)
 [![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/pr?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
 [![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/issue?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
 
