@@ -536,11 +536,11 @@ describe('StandardRenderer', function () {
                                 react: {
                                     canonicalDir: '/tmp/components/react',
                                     pkgMeta: {
-                                      _release: '0.2.3'
-                                  },
+                                        _release: '0.2.3'
+                                    },
                                     endpoint: {
-                                      name: 'react'
-                                  }
+                                        name: 'react'
+                                    }
                                 }
                             }
                         }

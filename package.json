@@ -1,13 +1,13 @@
 {
-  "name": "anom",
+  "name": "alm",
   "version": "1.8.0-alpha.0",
   "description": "Arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
-  "repository": "taoyuan/anom",
+  "repository": "taoyuan/ano-lm",
   "main": "lib",
   "bin": {
-    "anom": "bin/anom"
+    "alm": "bin/alm"
   },
   "homepage": "http://bower.io",
   "engines": {
@@ -95,8 +95,7 @@
   "scripts": {
     "test": "grunt test",
     "ci": "grunt travis",
-    "coveralls": "coveralls",
-    "prepublish": "in-publish && echo 'You need to use \"grunt publish\" to publish bower' && false || not-in-publish"
+    "coveralls": "coveralls"
   },
   "files": [
     "bin",

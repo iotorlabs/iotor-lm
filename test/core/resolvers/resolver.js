@@ -600,7 +600,7 @@ describe('Resolver', function () {
 
             mkdirp.sync(tempDir);
             fs.writeFileSync(path.join(tempDir, 'ano.json'), JSON.stringify({name: 'foo', version: '0.0.0'}));
-            fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+            fs.writeFileSync(path.join(tempDir, 'library.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
 
             resolver._readJson(tempDir)
         .then(function (meta) {
@@ -612,17 +612,17 @@ describe('Resolver', function () {
         .done();
         });
 
-        it('should fallback to component.json (notifying a warn)', function (next) {
+        it('should fallback to library.json (notifying a warn)', function (next) {
             var resolver = create('foo');
             var notified = false;
 
             mkdirp.sync(tempDir);
-            fs.writeFileSync(path.join(tempDir, 'component.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+            fs.writeFileSync(path.join(tempDir, 'library.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
 
             logger.on('log', function (log) {
                 expect(log).to.be.an('object');
                 if (log.level === 'warn' && /deprecated/i.test(log.id)) {
-                    expect(log.message).to.contain('component.json');
+                    expect(log.message).to.contain('library.json');
                     notified = true;
                 }
             });

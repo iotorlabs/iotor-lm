@@ -142,7 +142,7 @@ describe('ResolveCache', function () {
             var pkgMeta = path.join(tempPackage, '.ano.json');
 
       // Copy ano.json to .ano.json and add some props
-            copy.copyFile(path.join(tempPackage, 'component.json'), pkgMeta)
+            copy.copyFile(path.join(tempPackage, 'library.json'), pkgMeta)
         .then(function () {
             return Q.nfcall(fs.readFile, pkgMeta)
             .then(function (contents) {

@@ -393,7 +393,7 @@ _NOTE_: It's advisable that users run `bower cache clean`.
 - Bower no longer fails if `symlinks` to files are present in the `ano_libraries` folder ([#783](https://github.com/bower/bower/issues/783) and [#791](https://github.com/bower/bower/issues/791))
 - Disable git templates/hooks when running `git` ([#761](https://github.com/bower/bower/issues/761))
 - Add instructions to setup git workaround for proxies when execution of `git` fails ([#250](https://github.com/bower/bower/issues/250))
-- Ignore `component.json` if it looks like a component(1) file ([#556](https://github.com/bower/bower/issues/556))
+- Ignore `library.json` if it looks like a component(1) file ([#556](https://github.com/bower/bower/issues/556))
 - Fix multi-user usage on bower when it creates temporary directories to hold some files
 - Fix prompting causing an invalid JSON output when running commands with `--json`
 - When running Bower commands programmatically, prompting is now disabled by default (see the updated programmatic [usage](https://github.com/bower/bower#programmatic-api) for more info)
@@ -457,7 +457,7 @@ Fix for `#788` requires installed components to be re-installed.
 - File extensions now have more priority than mime types when deciding if extraction is necessary ([#657](https://github.com/bower/bower/pull/657))
 - Fix `Bower` not working when calling `.bat`/`.cmd` commands on Windows; it affected people using `Git portable` ([#626](https://github.com/bower/bower/issues/626))
 - Fix `bower list --paths` not resolving all files to absolute paths when the `main` property contained multiple files ([660](https://github.com/bower/bower/issues/660))
-- Fix `Bower` renaming `ano.json` and `component.json` files to `index.json` when it was the only file in the folder ([#674](https://github.com/bower/bower/issues/674))
+- Fix `Bower` renaming `ano.json` and `library.json` files to `index.json` when it was the only file in the folder ([#674](https://github.com/bower/bower/issues/674))
 - Ignore symlinks when copying/extracting since they are not portable, specially across different hard-drives ([#665](https://github.com/bower/bower/issues/665))
 - Local file/dir endpoints are now exclusively referenced by an absolute path or relative path starting with `.` ([#666](https://github.com/bower/bower/issues/666))
 - Linked packages `ano.json` files are now parsed, making `bower list` account linked packages dependencies ([#659](https://github.com/bower/bower/issues/659))
@@ -523,7 +523,7 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - Fix `list` command when package use different names than the `guessed` one ([#429](https://github.com/bower/bower/issues/429))
 
 ## 0.9.0 - 2013-04-25
-- __Change from `component.json` to `ano.json`__ ([#39](https://github.com/bower/bower/issues/39))
+- __Change from `library.json` to `ano.json`__ ([#39](https://github.com/bower/bower/issues/39))
 - __Compatibility with `node 0.10.x`, including fix hangs/errors when extracting `zip` files__
 - Fix `--save` and `--save-dev` not working with URLs that get redirected ([#417](https://github.com/bower/bower/issues/417))
 - Fix `init` command targeting `~commit` instead of `*`. ([#385](https://github.com/bower/bower/issues/385))
@@ -543,11 +543,11 @@ _NOTE_: The `components` folder will still be used if already created, making it
 
 ## 0.8.5 - 2013-03-04
 - Fix `cache-clean` command clearing the completion cache when the command was called with specific packages
-- Add error message when an error is caught parsing an invalid `component.json`
+- Add error message when an error is caught parsing an invalid `library.json`
 
 ## 0.8.4 - 2013-03-01
 - Fix some more duplicate async callbacks being called twice
-- Preserve new lines when saving `component.json` ([#285](https://github.com/bower/bower/issues/285))
+- Preserve new lines when saving `library.json` ([#285](https://github.com/bower/bower/issues/285))
 
 ## 0.8.3 - 2013-02-27
 - Fix error when using the `update` command ([#282](https://github.com/bower/bower/issues/282))
@@ -583,7 +583,7 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - Fix minor issues in the cache clean command
 - Better error message for invalid semver tags ([#185](https://github.com/bower/bower/issues/185))
 - Only show discover message in the list command only if there are packages
-- Fix mismatch issue due to reading cached component.json files ([#214](https://github.com/bower/bower/issues/214))
+- Fix mismatch issue due to reading cached library.json files ([#214](https://github.com/bower/bower/issues/214))
 - Better error messages when reading invalid .anorc files ([#220](https://github.com/bower/bower/issues/220))
 - Fix update command when used in packages pointing to assets ([#197](https://github.com/bower/bower/issues/197))
 - Bower now obeys packages's `.anorc` if they define a different `json` ([#205](https://github.com/bower/bower/issues/205))
@@ -601,10 +601,10 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - Fix uninstall --force flag in some cases
 - Add --silent option to the register option, to avoid questioning
 - Fix possible issues with options in some commands
-- Fix error reporting when reading invalid project component.json
+- Fix error reporting when reading invalid project library.json
 
 ## 0.6.6 - 2012-12-03
-- Improve error handling while reading component.json
+- Improve error handling while reading library.json
 - Fix package name not being correctly collected in the error summary
 
 ## 0.6.5 - 2012-12-01
@@ -618,10 +618,10 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - Fix version not being correctly set for local packages ([#155](https://github.com/bower/bower/issues/155))
 
 ## 0.6.2 - 2012-11-23
-- Fix uninstall --save when there is no component.json
+- Fix uninstall --save when there is no library.json
 
 ## 0.6.1 - 2012-11-22
-- Fix uninstall when the project component.json has no deps saved ([#153](https://github.com/bower/bower/issues/153))
+- Fix uninstall when the project library.json has no deps saved ([#153](https://github.com/bower/bower/issues/153))
 - Fix uncaught errors when using file writer (they are now caught and reported)
 - Fix temporary directories not being deleted when an exception occurs ([#153](https://github.com/bower/bower/issues/140))
 
@@ -641,13 +641,13 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - __Support for local path repositories__ ([#132](https://github.com/bower/bower/issues/132))
 - `install --save` now saves the correct tag (e.g: ~0.0.1) instead of 'latest'
 - `install --save` now saves packages pointing directly to assets correctly
-- Bower automatically creates a component.json when install with `--save` is used
+- Bower automatically creates a library.json when install with `--save` is used
 - Fix issues with list command ([#142](https://github.com/bower/bower/issues/142))
 - Fix local paths not being saved when installing with --save ([#114](https://github.com/bower/bower/issues/114))
 - `uninstall` now uninstalls nested dependencies if they are not shared ([#83](https://github.com/bower/bower/issues/83))
 - `uninstall` now warns when a dependency conflict occurs and aborts.
   It will only proceed if the `--force` flag is passed
-- Bower now detects mismatches between the version specified in the component.json and the tag, informing the user
+- Bower now detects mismatches between the version specified in the library.json and the tag, informing the user
 - `bower ls` now informs when a package has a new commit (for non-tagged repos)
 - Add jshintrc and fix a lot of issues related with JSHint warnings
 - `bower register` now prompts if the user really wants to proceed

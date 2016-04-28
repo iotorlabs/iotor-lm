@@ -176,7 +176,7 @@ describe('FsResolver', function () {
         .done();
         });
 
-        it('should not rename to index if source is a folder with just ano.json/component.json file in it', function (next) {
+        it('should not rename to index if source is a folder with just ano.json/library.json file in it', function (next) {
             var resolver;
 
             tempSource = path.resolve(__dirname, '../../tmp/tmp');
@@ -194,12 +194,12 @@ describe('FsResolver', function () {
 
             resolver = create(tempSource);
         })
-        .then(copy.copyFile.bind(copy, path.join(testPackage, 'ano.json'), path.join(tempSource, 'component.json')))
+        .then(copy.copyFile.bind(copy, path.join(testPackage, 'ano.json'), path.join(tempSource, 'library.json')))
         .then(function () {
             return resolver.resolve();
         })
         .then(function (dir) {
-            expect(fs.existsSync(path.join(dir, 'component.json'))).to.be(true);
+            expect(fs.existsSync(path.join(dir, 'library.json'))).to.be(true);
             next();
         })
         .done();

@@ -33,7 +33,7 @@ describe('bower unregister', function () {
 
     it('errors if name is not provided', function () {
         return helpers.run(unregister).fail(function (reason) {
-            expect(reason.message).to.be('Usage: anom unregister <name> <url>');
+            expect(reason.message).to.be('Usage: alm unregister <name> <url>');
             expect(reason.code).to.be('EINVFORMAT');
         });
     });
@@ -63,7 +63,7 @@ describe('bower unregister', function () {
         return helpers.expectEvent(promise.logger, 'confirm')
       .spread(function (e) {
           expect(e.type).to.be('confirm');
-          expect(e.message).to.be('You are about to remove component "some-name" from the bower registry (http://localhost). It is generally considered bad behavior to remove versions of a library that others are depending on. Are you really sure?');
+          expect(e.message).to.be('You are about to remove library "some-name" from the bower registry (http://localhost). It is generally considered bad behavior to remove versions of a library that others are depending on. Are you really sure?');
           expect(e.default).to.be(false);
       });
     });

@@ -358,14 +358,14 @@ describe('UrlResolver', function () {
         .done();
         });
 
-        it('should extract if source is an archive and not rename to index if inside it\'s just a just ano.json/component.json file in it', function (next) {
+        it('should extract if source is an archive and not rename to index if inside it\'s just a just ano.json/library.json file in it', function (next) {
             var resolver;
 
             nock('http://bower.io')
         .get('/package-zip-single-ano-json.zip')
         .replyWithFile(200, path.resolve(__dirname, '../../assets/package-zip-single-ano-json.zip'))
-        .get('/package-zip-single-component-json.zip')
-        .replyWithFile(200, path.resolve(__dirname, '../../assets/package-zip-single-component-json.zip'));
+        .get('/package-zip-single-library-json.zip')
+        .replyWithFile(200, path.resolve(__dirname, '../../assets/package-zip-single-library-json.zip'));
 
             resolver = create('http://bower.io/package-zip-single-ano-json.zip');
 
@@ -373,13 +373,13 @@ describe('UrlResolver', function () {
         .then(function (dir) {
             expect(fs.existsSync(path.join(dir, 'ano.json'))).to.be(true);
 
-            resolver = create('http://bower.io/package-zip-single-component-json.zip');
+            resolver = create('http://bower.io/package-zip-single-library-json.zip');
         })
         .then(function () {
             return resolver.resolve();
         })
         .then(function (dir) {
-            expect(fs.existsSync(path.join(dir, 'component.json'))).to.be(true);
+            expect(fs.existsSync(path.join(dir, 'library.json'))).to.be(true);
             next();
         })
         .done();

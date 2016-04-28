@@ -7,7 +7,7 @@
 /test/tmp/
 
 /ano.json
-/component.json
+/library.json
 /ano_libraries
 /test/sample
 !/test/sample/ano.json

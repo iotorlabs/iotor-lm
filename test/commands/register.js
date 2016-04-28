@@ -50,7 +50,7 @@ describe('bower register', function () {
 
     it('errors if name is not provided', function () {
         return helpers.run(register).fail(function (reason) {
-            expect(reason.message).to.be('Usage: anom register <name> <url>');
+            expect(reason.message).to.be('Usage: alm register <name> <url>');
             expect(reason.code).to.be('EINVFORMAT');
         });
     });
@@ -58,7 +58,7 @@ describe('bower register', function () {
     it('errors if url is not provided', function () {
         return helpers.run(register, ['some-name'])
       .fail(function (reason) {
-          expect(reason.message).to.be('Usage: anom register <name> <url>');
+          expect(reason.message).to.be('Usage: alm register <name> <url>');
           expect(reason.code).to.be('EINVFORMAT');
       });
     });
