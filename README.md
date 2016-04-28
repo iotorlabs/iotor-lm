@@ -79,7 +79,7 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 ## Configuration
 
-Bower can be configured using JSON in a `.anorc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
+ANO LM can be configured using JSON in a `.anorc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
 
 ## License
 
