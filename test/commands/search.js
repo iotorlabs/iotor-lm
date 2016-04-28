@@ -17,10 +17,10 @@ describe('bower search', function () {
         '../core/PackageRepository': function () {
           return {
             getRegistryClient: function () {
-                return {
-                    search: resolve
-                  };
-              }
+              return {
+                search: resolve
+              };
+            }
           }
         }
       });
@@ -39,10 +39,10 @@ describe('bower search', function () {
         '../core/PackageRepository': function () {
           return {
             getRegistryClient: function () {
-                return {
-                    list: resolve
-                  };
-              }
+              return {
+                list: resolve
+              };
+            }
           }
         }
       });
@@ -59,10 +59,10 @@ describe('bower search', function () {
         return {
           getRegistryClient: function () {
             return {
-                list: function (cb) {
-                    return cb(null, 'foobar');
-                  }
-              };
+              list: function (cb) {
+                return cb(null, 'foobar');
+              }
+            };
           }
         }
       }
@@ -82,13 +82,13 @@ describe('bower search', function () {
         return {
           getRegistryClient: function () {
             return {
-                list: function () {
-                    throw 'list called';
-                  },
-                search: function () {
-                    throw 'search called';
-                  }
-              };
+              list: function () {
+                throw 'list called';
+              },
+              search: function () {
+                throw 'search called';
+              }
+            };
           }
         }
       }

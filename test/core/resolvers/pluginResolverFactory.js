@@ -172,13 +172,13 @@ describe('pluginResolverFactory', function () {
 
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
 
             return {
-                tempPath: '/temp/path',
-                removeIgnores: true
-              };
+              tempPath: '/temp/path',
+              removeIgnores: true
+            };
           }
         };
       };
@@ -210,13 +210,13 @@ describe('pluginResolverFactory', function () {
 
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
 
             return {
-                tempPath: '/temp/path',
-                removeIgnores: true
-              };
+              tempPath: '/temp/path',
+              removeIgnores: true
+            };
           }
         };
       };
@@ -246,12 +246,12 @@ describe('pluginResolverFactory', function () {
           releases: null,
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
             return {
-                tempPath: '/temp/path',
-                removeIgnores: true
-              };
+              tempPath: '/temp/path',
+              removeIgnores: true
+            };
           }
         };
       };
@@ -284,7 +284,7 @@ describe('pluginResolverFactory', function () {
             return [
               {target: 'v1.0.0', version: '1.0.0'},
               {target: 'v1.0.1', version: '1.0.1'}
-              ];
+            ];
           },
           fetch: null
         };
@@ -364,13 +364,13 @@ describe('pluginResolverFactory', function () {
           },
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
 
             return {
-                tempPath: 'some/tmp/path',
-                removeIgnores: true
-              };
+              tempPath: 'some/tmp/path',
+              removeIgnores: true
+            };
           }
         };
       };
@@ -396,18 +396,18 @@ describe('pluginResolverFactory', function () {
             return [
               {target: 'v1.0.0', version: '1.0.0'},
               {target: 'v1.0.1', version: '1.0.1'}
-              ];
+            ];
           },
 
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
 
             return {
-                tempPath: 'some/temp/path',
-                removeIgnores: true
-              };
+              tempPath: 'some/temp/path',
+              removeIgnores: true
+            };
           }
         };
       };
@@ -447,18 +447,18 @@ describe('pluginResolverFactory', function () {
             return [
               {target: 'v1.0.0', version: '1.0.0'},
               {target: 'v1.0.1', version: '1.0.1'}
-              ];
+            ];
           },
 
           fetch: function (endpoint, cached) {
             if (cached && cached.version) {
-                return;
-              }
+              return;
+            }
 
             return {
-                tempPath: '/temp/path',
-                removeIgnores: true
-              };
+              tempPath: '/temp/path',
+              removeIgnores: true
+            };
           }
         };
       };

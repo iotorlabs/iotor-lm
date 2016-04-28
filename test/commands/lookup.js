@@ -11,14 +11,14 @@ describe('bower lookup', function () {
         return {
           getRegistryClient: function () {
             return {
-                lookup: function (query, callback) {
-                    if (query in response) {
-                        callback(null, response[query]);
-                      } else {
-                        callback();
-                      }
-                  }
-              };
+              lookup: function (query, callback) {
+                if (query in response) {
+                  callback(null, response[query]);
+                } else {
+                  callback();
+                }
+              }
+            };
           }
         }
       }

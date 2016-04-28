@@ -8,7 +8,7 @@ describe('bower version', function () {
   var mainPackage = new helpers.TempDir({
     'v0.0.0': {
       'ano.json': {
-        name: 'foobar',
+        name: 'foobar'
       }
     }
   });

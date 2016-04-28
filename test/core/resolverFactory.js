@@ -107,7 +107,7 @@ describe('resolverFactory', function () {
       'https://user@hostname.com/project.git/': 'https://user@hostname.com/project.git',
 
       // shorthand
-      'bower/bower': 'git://github.com/bower/bower.git'
+      'bower/bower': 'https://github.com/bower/bower.git'
     };
 
     mout.object.forOwn(endpoints, function (value, key) {
@@ -218,7 +218,7 @@ describe('resolverFactory', function () {
       'https://user@github.com/project/blah.git/': 'https://user@github.com/project/blah.git',
 
       // shorthand
-      'bower/bower': 'git://github.com/bower/bower.git'
+      'bower/bower': 'https://github.com/bower/bower.git'
     };
 
     nonGitHub = [
@@ -629,7 +629,7 @@ describe('resolverFactory', function () {
           shorthandResolver: 'git://bower.io/{{owner}}/{{package}}/{{shorthand}}'
         };
 
-        expect(resolver.getSource()).to.equal('git://github.com/bower/bower.git');
+        expect(resolver.getSource()).to.equal('https://github.com/bower/bower.git');
 
         return callFactory({source: 'IndigoUnited/promptly'}, config);
       })
@@ -717,8 +717,8 @@ describe('resolverFactory', function () {
         error = e;
       } finally {
         mout.object.forOwn(resolvers, function (ConcreteResolver, key) {
-            ConcreteResolver.clearRuntimeCache = originalMethods[key];
-          });
+          ConcreteResolver.clearRuntimeCache = originalMethods[key];
+        });
       }
 
       if (error) {

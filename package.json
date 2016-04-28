@@ -21,8 +21,8 @@
   ],
   "dependencies": {
     "abbrev": "^1.0.5",
-    "ano-config": "^1.4.0",
-    "ano-json": "^0.8.1",
+    "ano-config": "latest",
+    "ano-json": "latest",
     "archy": "1.0.0",
     "bower-endpoint-parser": "^0.2.2",
     "bower-logger": "^0.2.2",
