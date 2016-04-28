@@ -1,6 +1,6 @@
 {
   "name": "ano-lm",
-  "version": "1.8.0-alpha.0",
+  "version": "1.8.0",
   "description": "Arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
