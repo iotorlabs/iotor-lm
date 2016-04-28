@@ -115,7 +115,7 @@ describe('ano init', function () {
         answer({
           name: defaults.name,
           description: defaults.description,
-          main: defaults.main,
+          // main: defaults.main,
           keywords: defaults.keywords,
           authors: defaults.authors,
           license: defaults.license,
@@ -133,7 +133,7 @@ describe('ano init', function () {
         expect(mainPackage.readJson('ano.json')).to.eql({
           'name': 'name-from-npm',
           'description': 'description from npm',
-          'main': 'index.js',
+          // 'main': 'index.js',
           'keywords': [
             'foo',
             'bar'

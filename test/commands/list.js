@@ -81,7 +81,7 @@ describe('bower list', function () {
         expect(results.pkgMeta.devDependencies).to.eql({});
         expect(results.dependencies.package).to.be.an(Object);
         expect(results.dependencies.package.pkgMeta).to.be.an(Object);
-        expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
+        // expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
         expect(results.dependencies.package.canonicalDir).to.equal(
           path.join(tempDir.path, 'ano_libraries/package')
         );
@@ -99,7 +99,7 @@ describe('bower list', function () {
     var mainPackage = new helpers.TempDir({
       'ano.json': {
         name: 'package',
-        main: 'test.txt'
+        // main: 'test.txt'
       }
     }).prepare();
     mainPackage.prepare();
@@ -111,7 +111,7 @@ describe('bower list', function () {
         expect(results.dependencies).to.be.an(Object);
         expect(results.dependencies.package).to.be.an(Object);
         expect(results.dependencies.package.pkgMeta).to.be.an(Object);
-        expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
+        // expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
         expect(results.pkgMeta.dependencies).to.eql({
           package: mainPackage.path + '#*'
         });
@@ -201,7 +201,7 @@ describe('bower list', function () {
         expect(results.pkgMeta.devDependencies).to.eql({});
         expect(results.dependencies.package).to.be.an(Object);
         expect(results.dependencies.package.pkgMeta).to.be.an(Object);
-        expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
+        // expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
         expect(results.dependencies.package.canonicalDir).to.equal(
           path.join(tempDir.path, 'ano_libraries/package')
         );
