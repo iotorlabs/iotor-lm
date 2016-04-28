@@ -1,70 +1,55 @@
-# Bower - A package manager for the web
+# ano-lm - A arduino library manager
 
-> Bower needs resources for its maintenance. Please fill [this form](https://docs.google.com/forms/d/1i-Opb-uPdqUBBZQSbngv3Y3bfolG1gbBvtRLfxMnzRE/viewform?c=0&w=1) if you think you can help.
+> ano-lm needs is forked from [Bower](https://github.com/bower/bower)
 
-[![Build Status](https://travis-ci.org/bower/bower.svg?branch=master)](https://travis-ci.org/bower/bower)
+[![Build Status](https://travis-ci.org/taoyuan/ano-lm.svg?branch=master)](https://travis-ci.org/taoyuan/ano-lm)
 [![Windows Build](https://ci.appveyor.com/api/projects/status/jr6vfra8w84plh2g/branch/master?svg=true)](https://ci.appveyor.com/project/sheerun/bower/history)
-[![Coverage Status](https://img.shields.io/coveralls/bower/bower.svg)](https://coveralls.io/r/bower/bower?branch=master)
+[![Coverage Status](https://img.shields.io/coveralls/taoyuan/ano-lm.svg)](https://coveralls.io/r/taoyuan/ano-lm?branch=master)
 [![Discord chat](https://img.shields.io/badge/discord-join%20chat%20%E2%86%92-brightgreen.svg?style=flat)](https://discord.gg/0fFM7QF0KpZRh2cY)
-[![Issue Stats](http://issuestats.com/github/bower/bower/badge/pr?style=flat)](http://issuestats.com/github/bower/bower)
-[![Issue Stats](http://issuestats.com/github/bower/bower/badge/issue?style=flat)](http://issuestats.com/github/bower/bower)
-
-<img align="right" height="300" src="http://bower.io/img/bower-logo.png">
+[![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/pr?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
+[![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/issue?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
 
 ---
 
-Bower offers a generic, unopinionated solution to the problem of **front-end package management**, while exposing the package dependency model via an API that can be consumed by a more opinionated build stack. There are no system wide dependencies, no dependencies are shared between different apps, and the dependency tree is flat.
-
-Bower runs over Git, and is package-agnostic. A packaged component can be made up of any type of asset, and use any type of transport (e.g., AMD, CommonJS, etc.).
-
-**View complete docs on [bower.io](http://bower.io)**
-
-[View all packages available through Bower's registry](http://bower.io/search/).
 
 ## Install
 
 ```sh
-$ npm install -g bower
+$ npm install -g ano-lm
 ```
 
-Bower depends on [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/). Also make sure that [git](http://git-scm.com/) is installed as some bower
-packages require it to be fetched and installed.
+ANO LM depends on [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/). Also make sure that [git](http://git-scm.com/) is installed as some bower
+libraries require it to be fetched and installed.
 
 
 ## Usage
 
 See complete command line reference at [bower.io/docs/api/](http://bower.io/docs/api/)
 
-### Installing packages and dependencies
+### Installing libraries and dependencies
 
 ```sh
 # install dependencies listed in ano.json
-$ bower install
+$ alm install
 
-# install a package and add it to ano.json
-$ bower install <package> --save
+# install a library and add it to ano.json
+$ alm install <library> --save
 
-# install specific version of a package and add it to ano.json
-$ bower install <package>#<version> --save
+# install specific version of a library and add it to ano.json
+$ alm install <library>#<version> --save
 ```
 
-### Using packages
+### Uninstalling libraries
 
-We discourage using bower components statically for performance and security reasons (if component has an `upload.php` file that is not ignored, that can be easily exploited to do malicious stuff).
-
-The best approach is to process components installed by bower with build tool (like [Grunt](http://gruntjs.com/) or [gulp](http://gulpjs.com/)), and serve them concatenated or using a module loader (like [RequireJS](http://requirejs.org/)).
-
-### Uninstalling packages
-
-To uninstall a locally installed package:
+To uninstall a locally installed library:
 
 ```sh
-$ bower uninstall <package-name>
+$ alm uninstall <library-name>
 ```
 
 ### prezto and oh-my-zsh users
 
-On `prezto` or `oh-my-zsh`, do not forget to `alias bower='noglob bower'` or `bower install jquery\#1.9.1`
+On `prezto` or `oh-my-zsh`, do not forget to `alias alm='noglob alm'` or `alm install jquery\#1.9.1`
 
 ### Never run Bower with sudo
 
@@ -97,30 +82,6 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 Bower can be configured using JSON in a `.anorc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
 
-
-## Support
-
-* [Discord chat](https://discord.gg/0fFM7QF0KpZRh2cY)
-* [StackOverflow](http://stackoverflow.com/questions/tagged/bower)
-* [Mailinglist](http://groups.google.com/group/twitter-bower) - twitter-bower@googlegroups.com
-
-## Contributing
-
-We welcome [contributions](https://github.com/bower/bower/graphs/contributors) of all kinds from anyone. Please take a moment to review the [guidelines for contributing](CONTRIBUTING.md).
-
-* [Bug reports](https://github.com/bower/bower/wiki/Report-a-Bug)
-* [Feature requests](CONTRIBUTING.md#features)
-* [Pull requests](CONTRIBUTING.md#pull-requests)
-
-
-Note that on Windows for tests to pass you need to configure Git before cloning:
-
-```
-git config --global core.autocrlf input
-```
-
 ## License
-
-Copyright (c) 2016 Twitter and [other contributors](https://github.com/bower/bower/graphs/contributors)
 
 Licensed under the MIT License
