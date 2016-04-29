@@ -1,7 +1,7 @@
 {
   "name": "ano-lm",
   "version": "1.9.0",
-  "description": "Arduino library manager",
+  "description": "An arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
   "repository": "taoyuan/ano-lm",
@@ -9,7 +9,7 @@
   "bin": {
     "alm": "bin/alm"
   },
-  "homepage": "http://bower.io",
+  "homepage": "http://github.com/taoyuan/ano-lm",
   "engines": {
     "node": ">=0.10.0"
   },
