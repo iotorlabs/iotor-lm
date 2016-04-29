@@ -414,7 +414,7 @@ describe('bower install', function () {
     });
 
     return helpers.run(install).then(function () {
-      expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.0');
+      expect(tempDir.read('libraries/package/version.txt')).to.contain('1.0.0');
     });
   });
 
@@ -430,7 +430,7 @@ describe('bower install', function () {
     });
 
     return helpers.run(install).then(function () {
-      expect(tempDir.read('ano_libraries/package/index.txt')).to.contain('1.0.0');
+      expect(tempDir.read('libraries/package/index.txt')).to.contain('1.0.0');
     });
   });
 
@@ -465,8 +465,8 @@ describe('bower install', function () {
     });
 
     return helpers.run(install).then(function () {
-      expect(tempDir.exists('ano_libraries/package')).to.be(false);
-      expect(tempDir.exists('ano_libraries/package2')).to.be(true);
+      expect(tempDir.exists('libraries/package')).to.be(false);
+      expect(tempDir.exists('libraries/package2')).to.be(true);
     });
   });
 
@@ -501,8 +501,8 @@ describe('bower install', function () {
     });
     return helpers.run(install).then(function () {
       return helpers.run(install).then(function () {
-        expect(tempDir.exists('ano_libraries/package')).to.be(false);
-        expect(tempDir.exists('ano_libraries/package2')).to.be(true);
+        expect(tempDir.exists('libraries/package')).to.be(false);
+        expect(tempDir.exists('libraries/package2')).to.be(true);
       });
     });
   });
@@ -582,7 +582,7 @@ describe('bower install', function () {
         return helpers.run(install, [[archivePath]]);
       })
       .then(function () {
-        expect(tempDir.read(path.join('ano_libraries', 'package', mainPackageBaseName, 'test.js'))).to.contain('test');
+        expect(tempDir.read(path.join('libraries', 'package', mainPackageBaseName, 'test.js'))).to.contain('test');
       });
   });
 
@@ -615,7 +615,7 @@ describe('bower install', function () {
         return helpers.run(install, [[archivePath]]);
       })
       .then(function () {
-        expect(tempDir.read(path.join('ano_libraries', 'package', 'package.tar'))).to.contain('test');
+        expect(tempDir.read(path.join('libraries', 'package', 'package.tar'))).to.contain('test');
       });
   });
 });

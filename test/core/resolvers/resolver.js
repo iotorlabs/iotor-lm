@@ -611,32 +611,6 @@ describe('Resolver', function () {
         .done();
     });
 
-    it('should fallback to library.json (notifying a warn)', function (next) {
-      var resolver = create('foo');
-      var notified = false;
-
-      mkdirp.sync(tempDir);
-      fs.writeFileSync(path.join(tempDir, 'library.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
-
-      logger.on('log', function (log) {
-        expect(log).to.be.an('object');
-        if (log.level === 'warn' && /deprecated/i.test(log.id)) {
-          expect(log.message).to.contain('library.json');
-          notified = true;
-        }
-      });
-
-      resolver._readJson(tempDir)
-        .then(function (meta) {
-          expect(meta).to.be.an('object');
-          expect(meta.name).to.equal('bar');
-          expect(meta.version).to.equal('0.0.0');
-          expect(notified).to.be(true);
-          next();
-        })
-        .done();
-    });
-
     it('should resolve to an inferred json if no json file was found', function (next) {
       var resolver = create('foo');
 

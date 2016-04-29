@@ -83,7 +83,7 @@ describe('bower list', function () {
         expect(results.dependencies.package.pkgMeta).to.be.an(Object);
         // expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
         expect(results.dependencies.package.canonicalDir).to.equal(
-          path.join(tempDir.path, 'ano_libraries/package')
+          path.join(tempDir.path, 'libraries/package')
         );
         expect(results.dependencies.package.dependencies).to.eql({});
         expect(results.dependencies.package.nrDependants).to.equal(1);
@@ -116,7 +116,7 @@ describe('bower list', function () {
           package: mainPackage.path + '#*'
         });
         expect(results.dependencies.package.canonicalDir).to.equal(
-          path.normalize('ano_libraries/package')
+          path.normalize('libraries/package')
         );
       });
     });
@@ -136,7 +136,7 @@ describe('bower list', function () {
       return list({paths: true}).spread(function (results) {
         expect(results).to.be.an(Object);
         expect(results.package).to.equal(
-          'ano_libraries/package/test.txt'
+          'libraries/package/test.txt'
         );
       });
     });
@@ -157,8 +157,8 @@ describe('bower list', function () {
         expect(results).to.be.an(Object);
         expect(results.package).to.be.an(Object);
         expect(results.package).to.eql([
-          'ano_libraries/package/test.txt',
-          'ano_libraries/package/test2.txt'
+          'libraries/package/test.txt',
+          'libraries/package/test2.txt'
         ]);
       });
     });
@@ -203,7 +203,7 @@ describe('bower list', function () {
         expect(results.dependencies.package.pkgMeta).to.be.an(Object);
         // expect(results.dependencies.package.pkgMeta.main).to.equal('test.txt');
         expect(results.dependencies.package.canonicalDir).to.equal(
-          path.join(tempDir.path, 'ano_libraries/package')
+          path.join(tempDir.path, 'libraries/package')
         );
         expect(results.dependencies.package.dependencies).to.eql({});
         expect(results.dependencies.package.nrDependants).to.equal(1);
@@ -248,7 +248,7 @@ describe('bower list', function () {
           package: gitPackage.path + '#1.0.0'
         });
         expect(results.dependencies.package.canonicalDir).to.equal(
-          path.normalize('ano_libraries/package')
+          path.normalize('libraries/package')
         );
       });
     });

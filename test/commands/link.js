@@ -65,7 +65,7 @@ describe('bower link', function () {
         }
       ]);
     }).then(function () {
-      expect(otherPackage.read('ano_libraries/package/index.js'))
+      expect(otherPackage.read('libraries/package/index.js'))
         .to.be('Hello World!');
     });
   });
@@ -137,7 +137,7 @@ describe('bower link', function () {
         }
       ]);
     }).then(function () {
-      expect(otherPackage.read('ano_libraries/local/index.js'))
+      expect(otherPackage.read('libraries/local/index.js'))
         .to.be('Hello World!');
     });
   });

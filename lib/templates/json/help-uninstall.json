@@ -1,6 +1,6 @@
 {
   "command": "uninstall",
-  "description": "Uninstalls a package locally from your ano_libraries directory",
+  "description": "Uninstalls a package locally from your libraries directory",
   "usage": [
     "uninstall <name> [<name> ..] [<options>]"
   ],

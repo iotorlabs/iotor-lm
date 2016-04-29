@@ -123,7 +123,7 @@ https://github.com/npm/npm/issues/11227
 
 Fixes regression issues introduced with 1.6.2, specifically:
 
-- Allow for ano_libraries to be a symlink
+- Allow for libraries to be a symlink
 - Allow setting custom registry in .anorc
 
 ## 1.6.2 - 2015-10-15
@@ -390,7 +390,7 @@ _NOTE_: It's advisable that users run `bower cache clean`.
 - Multiple mains are now correctly outputted as an array in `bower list --paths` ([#784](https://github.com/bower/bower/issues/784))
 - Add `--relative` option to `bower list --json` so that Bower outputs relative paths instead of absolute ([#714](https://github.com/bower/bower/issues/714))
 - `bower list --paths` now outputs relative paths by default; can be turned off with `--no-relative` ([#785](https://github.com/bower/bower/issues/785))
-- Bower no longer fails if `symlinks` to files are present in the `ano_libraries` folder ([#783](https://github.com/bower/bower/issues/783) and [#791](https://github.com/bower/bower/issues/791))
+- Bower no longer fails if `symlinks` to files are present in the `libraries` folder ([#783](https://github.com/bower/bower/issues/783) and [#791](https://github.com/bower/bower/issues/791))
 - Disable git templates/hooks when running `git` ([#761](https://github.com/bower/bower/issues/761))
 - Add instructions to setup git workaround for proxies when execution of `git` fails ([#250](https://github.com/bower/bower/issues/250))
 - Ignore `library.json` if it looks like a component(1) file ([#556](https://github.com/bower/bower/issues/556))
@@ -502,7 +502,7 @@ On Windows the folder is located in `AppData/bower`.
 ## 0.10.0 - 2013-07-02
 
 - __Allow specific commits to be targeted__ ([#275](https://github.com/bower/bower/issues/275))
-- __Change bower default folder from `components` to `ano_libraries`__ ([#434](https://github.com/bower/bower/issues/434))
+- __Change bower default folder from `components` to `libraries`__ ([#434](https://github.com/bower/bower/issues/434))
 - __Support semver pre-releases and builds__ ([#188](https://github.com/bower/bower/issues/188))
 - Use `Content-Type` and `Content-Disposition` to guess file types, such as zip files ([#454](https://github.com/bower/bower/pull/454))
 - Fix bower failing silently when using an invalid version value in the library.json file ([#439](https://github.com/bower/bower/issues/439))

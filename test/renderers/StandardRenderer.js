@@ -828,7 +828,7 @@ describe('StandardRenderer', function () {
       var renderer = new StandardRenderer('help');
       renderer.end({
         'command': 'uninstall',
-        'description': 'Uninstalls a package locally from your ano_libraries directory',
+        'description': 'Uninstalls a package locally from your libraries directory',
         'usage': [
           'uninstall <name> [<name> ..] [<options>]'
         ],
@@ -862,7 +862,7 @@ describe('StandardRenderer', function () {
            Additionally all global options listed in 'alm help' are available
 
        Description:
-           Uninstalls a package locally from your ano_libraries directory
+           Uninstalls a package locally from your libraries directory
 
        */
       }));

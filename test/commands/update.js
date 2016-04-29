@@ -86,8 +86,8 @@ describe('bower update', function () {
     });
 
     return update().then(function () {
-      expect(tempDir.exists('ano_libraries/package/library.json')).to.equal(true);
-      expect(tempDir.read('ano_libraries/package/library.json')).to.contain('"name": "package"');
+      expect(tempDir.exists('libraries/package/library.json')).to.equal(true);
+      expect(tempDir.read('libraries/package/library.json')).to.contain('"name": "package"');
     });
   });
 
@@ -120,8 +120,8 @@ describe('bower update', function () {
     });
 
     return update().then(function () {
-      expect(tempDir.exists('ano_libraries/package2/library.json')).to.equal(true);
-      expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+      expect(tempDir.exists('libraries/package2/library.json')).to.equal(true);
+      expect(tempDir.exists('libraries/package3')).to.equal(false);
     });
   });
 
@@ -155,8 +155,8 @@ describe('bower update', function () {
 
     return update().then(function () {
       return update().then(function () {
-        expect(tempDir.exists('ano_libraries/package2/library.json')).to.equal(true);
-        expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+        expect(tempDir.exists('libraries/package2/library.json')).to.equal(true);
+        expect(tempDir.exists('libraries/package3')).to.equal(false);
       });
     });
 
@@ -244,7 +244,7 @@ describe('bower update', function () {
 
     return install().then(function () {
 
-      expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.0');
+      expect(tempDir.read('libraries/package/version.txt')).to.contain('1.0.0');
 
       tempDir.prepare({
         'library.json': {
@@ -256,7 +256,7 @@ describe('bower update', function () {
       });
 
       return update().then(function () {
-        expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.1');
+        expect(tempDir.read('libraries/package/version.txt')).to.contain('1.0.1');
       });
     });
   });
@@ -305,8 +305,8 @@ describe('bower update', function () {
 
     return install().then(function () {
 
-      expect(tempDir.readJson('ano_libraries/package2/library.json').version).to.equal('1.0.0');
-      expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+      expect(tempDir.readJson('libraries/package2/library.json').version).to.equal('1.0.0');
+      expect(tempDir.exists('libraries/package3')).to.equal(false);
 
       tempDir.prepare({
         'library.json': {
@@ -321,8 +321,8 @@ describe('bower update', function () {
       });
 
       return update().then(function () {
-        expect(tempDir.readJson('ano_libraries/package2/library.json').version).to.equal('1.0.1');
-        expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
+        expect(tempDir.readJson('libraries/package2/library.json').version).to.equal('1.0.1');
+        expect(tempDir.exists('libraries/package3')).to.equal(false);
       });
     });
   });

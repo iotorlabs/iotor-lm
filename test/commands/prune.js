@@ -12,7 +12,7 @@ describe('bower home', function () {
         jquery: '*'
       }
     },
-    'ano_libraries/jquery/jquery.js': 'jquery source'
+    'libraries/jquery/jquery.js': 'jquery source'
   });
 
   it('correctly reads arguments', function () {
@@ -27,23 +27,23 @@ describe('bower home', function () {
 
   it('removes extraneous packages', function () {
     mainPackage.prepare({
-      'ano_libraries/angular/angular.js': 'angular source',
-      'ano_libraries/angular/.library.json': {name: 'angular'}
+      'libraries/angular/angular.js': 'angular source',
+      'libraries/angular/.library.json': {name: 'angular'}
     });
 
     return helpers.run(prune, [{}, {cwd: mainPackage.path}]).then(function () {
-      expect(mainPackage.exists('ano_libraries/angular/angular.js'))
+      expect(mainPackage.exists('libraries/angular/angular.js'))
         .to.be(false);
     });
   });
 
   it('leaves non-bower packages', function () {
     mainPackage.prepare({
-      'ano_libraries/angular/angular.js': 'angular source'
+      'libraries/angular/angular.js': 'angular source'
     });
 
     return helpers.run(prune, [{}, {cwd: mainPackage.path}]).then(function () {
-      expect(mainPackage.exists('ano_libraries/angular/angular.js'))
+      expect(mainPackage.exists('libraries/angular/angular.js'))
         .to.be(true);
     });
   });
@@ -51,15 +51,15 @@ describe('bower home', function () {
   it('deals with custom directory', function () {
     mainPackage.prepare({
       '.anorc': {directory: 'components'},
-      'ano_libraries/angular/.library.json': {name: 'angular'},
-      'ano_libraries/angular/angular.js': 'angular source',
+      'libraries/angular/.library.json': {name: 'angular'},
+      'libraries/angular/angular.js': 'angular source',
       'components/angular/.library.json': {name: 'angular'},
       'components/angular/angular.js': 'angular source'
     });
 
     return helpers.run(prune, [{}, {cwd: mainPackage.path}]).then(function () {
       expect(mainPackage.exists('components/angular/angular.js')).to.be(false);
-      expect(mainPackage.exists('ano_libraries/angular/angular.js')).to.be(true);
+      expect(mainPackage.exists('libraries/angular/angular.js')).to.be(true);
     });
   });
 });

@@ -138,7 +138,7 @@ module.exports = function (grunt) {
     grunt.log.writeln('Testing bower on sample project...');
 
     childProcess.execSync(
-      'cd test/sample && rm -rf ano_libraries && ' + dir + '/bin/bower install --force', {stdio: [0, 1, 2]}
+      'cd test/sample && rm -rf libraries && ' + dir + '/bin/bower install --force', {stdio: [0, 1, 2]}
     );
 
     var expectedPackages = (
@@ -150,7 +150,7 @@ module.exports = function (grunt) {
       'requirejs restangular slimScroll slimScrollHorizontal venturocket-angular-slider'
     ).split(' ');
 
-    var installedPackages = fs.readdirSync('./test/sample/ano_libraries');
+    var installedPackages = fs.readdirSync('./test/sample/libraries');
 
     var installedDiff = arraydiff(expectedPackages, installedPackages);
 

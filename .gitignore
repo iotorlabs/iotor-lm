@@ -7,7 +7,7 @@
 /test/tmp/
 
 /library.json
-/ano_libraries
+/libraries
 /test/sample
 !/test/sample/library.json
 /npm-shrinkwrap.json
