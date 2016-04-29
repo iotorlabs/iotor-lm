@@ -64,7 +64,7 @@
     {
       "shorthand": "-v",
       "flag": "--version",
-      "description": "Output Ano version"
+      "description": "Output ANO LM version"
     },
     {
       "flag": "--no-color",
