@@ -1,6 +1,6 @@
 {
   "command": "init",
-  "description": "Creates a ano.json file based on answers to questions.",
+  "description": "Creates a library.json file based on answers to questions.",
   "usage": [
     "init [<options>]"
   ],

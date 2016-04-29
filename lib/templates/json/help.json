@@ -7,7 +7,7 @@
     "help": "Display help information about Ano",
     "home": "Opens a package homepage into your favorite browser",
     "info": "Info of a particular package",
-    "init": "Interactively create a ano.json file",
+    "init": "Interactively create a library.json file",
     "install": "Install a package locally",
     "link": "Symlink a package folder",
     "list": "List local packages - and possible updates",

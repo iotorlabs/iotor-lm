@@ -22,7 +22,7 @@
   "dependencies": {
     "abbrev": "^1.0.5",
     "ano-config": "latest",
-    "ano-json": "latest",
+    "ano-json": "^1.1.0",
     "archy": "1.0.0",
     "bower-endpoint-parser": "^0.2.2",
     "bower-logger": "^0.2.2",

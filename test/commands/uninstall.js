@@ -9,7 +9,7 @@ var uninstall = helpers.command('uninstall');
 describe('bower uninstall', function () {
 
   var tempDir = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'hello-world',
       dependencies: {
         'underscore': '*'
@@ -21,7 +21,7 @@ describe('bower uninstall', function () {
     tempDir.prepare();
   });
 
-  var anoJsonPath = path.join(tempDir.path, 'ano.json');
+  var anoJsonPath = path.join(tempDir.path, 'library.json');
 
   function anoJson() {
     return JSON.parse(fs.readFileSync(anoJsonPath));
@@ -48,13 +48,13 @@ describe('bower uninstall', function () {
     });
   });
 
-  it('removes dependency from ano.json if --save flag is used', function () {
+  it('removes dependency from library.json if --save flag is used', function () {
     return helpers.run(uninstall, [['underscore'], {save: true}, config]).then(function () {
       expect(anoJson().dependencies).to.eql({});
     });
   });
 
-  it('removes dependency from ano.json if save config setting is true', function () {
+  it('removes dependency from library.json if save config setting is true', function () {
     var configWithSave = {
       cwd: tempDir.path,
       interactive: true,
@@ -68,7 +68,7 @@ describe('bower uninstall', function () {
   it('removes dependency from relative config.directory', function () {
     var targetPath = path.resolve(tempDir.path, 'other_directory/underscore');
     mkdirp.sync(targetPath);
-    fs.writeFileSync(path.join(targetPath, '.ano.json'), '{ "name": "underscore" }');
+    fs.writeFileSync(path.join(targetPath, '.library.json'), '{ "name": "underscore" }');
 
     return helpers.run(uninstall, [['underscore'], undefined, {
       cwd: tempDir.path,
@@ -85,7 +85,7 @@ describe('bower uninstall', function () {
   it('removes dependency from absolute config.directory', function () {
     var targetPath = path.resolve(tempDir.path, 'other_directory/underscore');
     mkdirp.sync(targetPath);
-    fs.writeFileSync(path.join(targetPath, '.ano.json'), '{ "name": "underscore" }');
+    fs.writeFileSync(path.join(targetPath, '.library.json'), '{ "name": "underscore" }');
 
     return helpers.run(uninstall, [['underscore'], undefined, {
       cwd: tempDir.path,

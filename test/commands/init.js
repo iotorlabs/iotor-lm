@@ -12,7 +12,7 @@ describe('ano init', function () {
       .to.eql([]);
   });
 
-  it('generates ano.json file', function () {
+  it('generates library.json file', function () {
     mainPackage.prepare();
 
     var logger = init({
@@ -39,7 +39,7 @@ describe('ano init', function () {
         return helpers.expectEvent(logger, 'end');
       })
       .then(function () {
-        expect(mainPackage.readJson('ano.json')).to.eql({
+        expect(mainPackage.readJson('library.json')).to.eql({
           name: 'test-name',
           homepage: 'test-homepage',
           authors: ['test-author'],
@@ -63,23 +63,6 @@ describe('ano init', function () {
         expect(reason.code).to.be('ENOINT');
       }
     );
-  });
-
-  it('warns about existing ano.json', function () {
-    mainPackage.prepare({
-      'ano.json': {
-        name: 'foobar'
-      }
-    });
-
-    var logger = init({cwd: mainPackage.path, interactive: true});
-
-    return helpers.expectEvent(logger, 'log').spread(function (event) {
-      expect(event.level).to.be('warn');
-      expect(event.message).to.be(
-        'The existing ano.json file will be used and filled in'
-      );
-    });
   });
 
   it('gets defaults from package.json', function () {
@@ -130,7 +113,7 @@ describe('ano init', function () {
         return helpers.expectEvent(logger, 'end');
       })
       .then(function () {
-        expect(mainPackage.readJson('ano.json')).to.eql({
+        expect(mainPackage.readJson('library.json')).to.eql({
           'name': 'name-from-npm',
           'description': 'description from npm',
           // 'main': 'index.js',

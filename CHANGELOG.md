@@ -2,7 +2,7 @@
 
 ## 1.7.9 - 2016-04-05
 
-- Show warnings for invalid ano.json fields
+- Show warnings for invalid library.json fields
 - Update ano-json
   - Less strict validation on package name (allow spaces, slashes, and "@")
 
@@ -240,14 +240,14 @@ It also includes improved test coverage (~60% -> ~85%) and many refactors.
 
 - [fix] callstack error when processing installed packages with circular dependencies ([#1349](https://github.com/bower/bower/issues/1349))
 - [fix] Prevent bower list --paths` failing with TypeError ([#1383](https://github.com/bower/bower/issues/1383))
-- "bower install" fails if there's no ano.json in current directory ([#922](https://github.com/bower/bower/issues/922))
+- "bower install" fails if there's no library.json in current directory ([#922](https://github.com/bower/bower/issues/922))
 
 ## 1.3.6 - 2014-07-02
 
 - [fix] Make --force always re-run installation ([#931](https://github.com/bower/bower/issues/931))
 - [fix] Disable caching for local resources ([#1356](https://github.com/bower/bower/issues/1356))
 - [fix] Emit errors instead throwing them when using bower.commands API ([#1297](https://github.com/bower/bower/issues/1297))
-- [fix] Main files and ano.json are never ignored ([#547](https://github.com/bower/bower/issues/547))
+- [fix] Main files and library.json are never ignored ([#547](https://github.com/bower/bower/issues/547))
 - [fix] Check if pkgMeta is undefined during uninstall command ([#1329](https://github.com/bower/bower/issues/1329))
 - [fix] Make custom tmp dir and ignores play well with each other ([#1299](https://github.com/bower/bower/issues/1299))
 - Warn users when installing package with missing properties ([#694](https://github.com/bower/bower/issues/694))
@@ -383,8 +383,8 @@ _NOTE_: It's advisable that users run `bower cache clean`.
 - __Bower no longer installs a pre-release version by default, that is, if no version/range is specified__ ([#782](https://github.com/bower/bower/issues/782))
 - __`bower info <package>` will now show the latest `<package>` information along with the available versions__ ([#759](https://github.com/bower/bower/issues/759))
 - __`bower link` no longer requires an elevated user on Windows in most cases__ ([#472](https://github.com/bower/bower/issues/472))
-- __Init command now prompts for the whole `ano.json` spec properties, filling in default values for `author` and `homepage` based on `git` settings__ ([#693](https://github.com/bower/bower/issues/693))
-- Changes to endpoint sources in `ano.json` are now catched up by `bower install` and `bower update` ([#788](https://github.com/bower/bower/issues/788))
+- __Init command now prompts for the whole `library.json` spec properties, filling in default values for `author` and `homepage` based on `git` settings__ ([#693](https://github.com/bower/bower/issues/693))
+- Changes to endpoint sources in `library.json` are now catched up by `bower install` and `bower update` ([#788](https://github.com/bower/bower/issues/788))
 - Allow semver ranges in `bower cache clean`, e.g. `bower cache clean jquery#<2.0.0` ([#688](https://github.com/bower/bower/issues/688))
 - Normalize `bower list --paths` on Windows ([#279](https://github.com/bower/bower/issues/279))
 - Multiple mains are now correctly outputted as an array in `bower list --paths` ([#784](https://github.com/bower/bower/issues/784))
@@ -423,7 +423,7 @@ Fix for `#788` requires installed components to be re-installed.
 ## 1.1.0 - 2013-08-03
 
 - __Fix `--save` and `--save-dev` not working correctly for the uninstall command in some situations__
-- __Attempting to register a package that declares `"private": true` in `ano.json` will result in an error ([#162](https://github.com/bower/bower/issues/162))__
+- __Attempting to register a package that declares `"private": true` in `library.json` will result in an error ([#162](https://github.com/bower/bower/issues/162))__
 - __Fix retry strategy on download error that was causing some strange I/O errors__ ([#699](https://github.com/bower/bower/issues/699) and [#704](https://github.com/bower/bower/issues/704))
 - __`bower prune` now clears pruned packages dependencies if they are also extraneous__ ([#708](https://github.com/bower/bower/issues/708))
 - __`bower uninstall` now uninstalls uninstalled packages dependencies if they are not shared ([#609](https://github.com/bower/bower/issues/609))__
@@ -435,12 +435,12 @@ Fix for `#788` requires installed components to be re-installed.
 - Added `bower ls` as an alias to `bower list`
 - Fix regression: do not create a json file when saving is required, warn instead
 - Ignore linked packages when reading dependencies in `ano init` ([#709](https://github.com/bower/bower/issues/709))
-- `bower list` is now able to (partially) reconstruct the dependency tree, even for dependencies not declared in `ano.json` ([#622](https://github.com/bower/bower/issues/622))
+- `bower list` is now able to (partially) reconstruct the dependency tree, even for dependencies not declared in `library.json` ([#622](https://github.com/bower/bower/issues/622))
 
 
 ## 1.0.3 - 2013-07-30
 
-- Fix some changes not being saved to ano.json ([#685](https://github.com/bower/bower/issues/685))
+- Fix some changes not being saved to library.json ([#685](https://github.com/bower/bower/issues/685))
 - Fix `bower info <package> <property>` not showing information related to property of the latest version of that package ([#684](https://github.com/bower/bower/issues/684))
 
 
@@ -457,10 +457,10 @@ Fix for `#788` requires installed components to be re-installed.
 - File extensions now have more priority than mime types when deciding if extraction is necessary ([#657](https://github.com/bower/bower/pull/657))
 - Fix `Bower` not working when calling `.bat`/`.cmd` commands on Windows; it affected people using `Git portable` ([#626](https://github.com/bower/bower/issues/626))
 - Fix `bower list --paths` not resolving all files to absolute paths when the `main` property contained multiple files ([660](https://github.com/bower/bower/issues/660))
-- Fix `Bower` renaming `ano.json` and `library.json` files to `index.json` when it was the only file in the folder ([#674](https://github.com/bower/bower/issues/674))
+- Fix `Bower` renaming `library.json` and `library.json` files to `index.json` when it was the only file in the folder ([#674](https://github.com/bower/bower/issues/674))
 - Ignore symlinks when copying/extracting since they are not portable, specially across different hard-drives ([#665](https://github.com/bower/bower/issues/665))
 - Local file/dir endpoints are now exclusively referenced by an absolute path or relative path starting with `.` ([#666](https://github.com/bower/bower/issues/666))
-- Linked packages `ano.json` files are now parsed, making `bower list` account linked packages dependencies ([#659](https://github.com/bower/bower/issues/659))
+- Linked packages `library.json` files are now parsed, making `bower list` account linked packages dependencies ([#659](https://github.com/bower/bower/issues/659))
 - Bower now fails to run with sudo unless `--allow-root` is passed ([#498](https://github.com/bower/bower/issues/498))
 - Add additional system information such as node version, bower version, OS version when an error occurs ([#670](https://github.com/bower/bower/issues/670))
 - `bower install` no longer overwrites `linked` packages unless it needs to ([#593](https://github.com/bower/bower/issues/593)).
@@ -505,7 +505,7 @@ On Windows the folder is located in `AppData/bower`.
 - __Change bower default folder from `components` to `ano_libraries`__ ([#434](https://github.com/bower/bower/issues/434))
 - __Support semver pre-releases and builds__ ([#188](https://github.com/bower/bower/issues/188))
 - Use `Content-Type` and `Content-Disposition` to guess file types, such as zip files ([#454](https://github.com/bower/bower/pull/454))
-- Fix bower failing silently when using an invalid version value in the ano.json file ([#439](https://github.com/bower/bower/issues/439))
+- Fix bower failing silently when using an invalid version value in the library.json file ([#439](https://github.com/bower/bower/issues/439))
 - Fix bower slowness when downloading after redirects ([#437](https://github.com/bower/bower/issues/437))
 - Detect and error out with a friendly message when `git` is not installed ([#362](https://github.com/bower/bower/issues/362))
 - Add `--quiet` and `--silent` CLI options ([#343](https://github.com/bower/bower/issues/343))
@@ -523,7 +523,7 @@ _NOTE_: The `components` folder will still be used if already created, making it
 - Fix `list` command when package use different names than the `guessed` one ([#429](https://github.com/bower/bower/issues/429))
 
 ## 0.9.0 - 2013-04-25
-- __Change from `library.json` to `ano.json`__ ([#39](https://github.com/bower/bower/issues/39))
+- __Change from `library.json` to `library.json`__ ([#39](https://github.com/bower/bower/issues/39))
 - __Compatibility with `node 0.10.x`, including fix hangs/errors when extracting `zip` files__
 - Fix `--save` and `--save-dev` not working with URLs that get redirected ([#417](https://github.com/bower/bower/issues/417))
 - Fix `init` command targeting `~commit` instead of `*`. ([#385](https://github.com/bower/bower/issues/385))

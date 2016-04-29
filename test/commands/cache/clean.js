@@ -13,7 +13,7 @@ describe('bower cache clean', function () {
 
     object.map(spec, function (anoJson) {
       anoJson._source = anoJson.name + '/' + anoJson.version;
-      var path = md5(anoJson._source) + '/' + anoJson.version + '/.ano.json';
+      var path = md5(anoJson._source) + '/' + anoJson.version + '/.library.json';
       files[path] = anoJson;
     });
 

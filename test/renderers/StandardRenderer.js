@@ -328,7 +328,7 @@ describe('StandardRenderer', function () {
            1) fizfuz#~0.0.0 which resolved to 0.0.0 and is required by dependant1#release1, dependant2#release2
            2) fizfuz2# and is required by jquery2
 
-       Prefix the choice with ! to persist it to ano.json
+       Prefix the choice with ! to persist it to library.json
 
 
        */
@@ -841,12 +841,12 @@ describe('StandardRenderer', function () {
           {
             'shorthand': '-S',
             'flag': '--save',
-            'description': 'Remove uninstalled packages from the project\'s ano.json dependencies'
+            'description': 'Remove uninstalled packages from the project\'s library.json dependencies'
           },
           {
             'shorthand': '-D',
             'flag': '--save-dev',
-            'description': 'Remove uninstalled packages from the project\'s ano.json devDependencies'
+            'description': 'Remove uninstalled packages from the project\'s library.json devDependencies'
           }
         ]
       });
@@ -857,8 +857,8 @@ describe('StandardRenderer', function () {
 
        Options:
            -h, --help              Show this help message
-           -S, --save              Remove uninstalled packages from the project's ano.json dependencies
-           -D, --save-dev          Remove uninstalled packages from the project's ano.json devDependencies
+           -S, --save              Remove uninstalled packages from the project's library.json dependencies
+           -D, --save-dev          Remove uninstalled packages from the project's library.json devDependencies
            Additionally all global options listed in 'alm help' are available
 
        Description:

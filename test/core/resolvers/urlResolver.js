@@ -76,7 +76,7 @@ describe('UrlResolver', function () {
     });
 
     afterEach(function (next) {
-      rimraf(path.join(tempDir, '.ano.json'), next);
+      rimraf(path.join(tempDir, '.library.json'), next);
     });
 
     after(function (next) {
@@ -227,7 +227,7 @@ describe('UrlResolver', function () {
     // package meta of a canonical dir is set to the
     // expected value
     function assertMain(dir, singleFile) {
-      return Q.nfcall(fs.readFile, path.join(dir, '.ano.json'))
+      return Q.nfcall(fs.readFile, path.join(dir, '.library.json'))
         .then(function (contents) {
           var pkgMeta = JSON.parse(contents.toString());
 
@@ -354,33 +354,6 @@ describe('UrlResolver', function () {
 
           return assertMain(dir, 'index.js')
             .then(next.bind(next, null));
-        })
-        .done();
-    });
-
-    it('should extract if source is an archive and not rename to index if inside it\'s just a just ano.json/library.json file in it', function (next) {
-      var resolver;
-
-      nock('http://bower.io')
-        .get('/package-zip-single-ano-json.zip')
-        .replyWithFile(200, path.resolve(__dirname, '../../assets/package-zip-single-ano-json.zip'))
-        .get('/package-zip-single-library-json.zip')
-        .replyWithFile(200, path.resolve(__dirname, '../../assets/package-zip-single-library-json.zip'));
-
-      resolver = create('http://bower.io/package-zip-single-ano-json.zip');
-
-      resolver.resolve()
-        .then(function (dir) {
-          expect(fs.existsSync(path.join(dir, 'ano.json'))).to.be(true);
-
-          resolver = create('http://bower.io/package-zip-single-library-json.zip');
-        })
-        .then(function () {
-          return resolver.resolve();
-        })
-        .then(function (dir) {
-          expect(fs.existsSync(path.join(dir, 'library.json'))).to.be(true);
-          next();
         })
         .done();
     });

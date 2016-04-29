@@ -93,7 +93,7 @@ describe('scripts', function () {
 
   });
 
-  it('should reorder packages by dependencies, while trying to maintain order from ano.json, correctly.', function () {
+  it('should reorder packages by dependencies, while trying to maintain order from library.json, correctly.', function () {
 
     var mockAngularUI = {
       dependencies: {

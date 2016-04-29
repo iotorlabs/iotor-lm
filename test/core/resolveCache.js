@@ -139,9 +139,9 @@ describe('ResolveCache', function () {
     });
 
     it('should read the package meta if not present', function (next) {
-      var pkgMeta = path.join(tempPackage, '.ano.json');
+      var pkgMeta = path.join(tempPackage, '.library.json');
 
-      // Copy ano.json to .ano.json and add some props
+      // Copy library.json to .library.json and add some props
       copy.copyFile(path.join(tempPackage, 'library.json'), pkgMeta)
         .then(function () {
           return Q.nfcall(fs.readFile, pkgMeta)
@@ -176,7 +176,7 @@ describe('ResolveCache', function () {
         }, function (err) {
           expect(err).to.be.an(Error);
           expect(err.code).to.equal('ENOENT');
-          expect(err.message).to.contain(path.join(tempPackage, '.ano.json'));
+          expect(err.message).to.contain(path.join(tempPackage, '.library.json'));
 
           next();
         })
@@ -184,7 +184,7 @@ describe('ResolveCache', function () {
     });
 
     it('should error out when reading an invalid package meta', function (next) {
-      var pkgMeta = path.join(tempPackage, '.ano.json');
+      var pkgMeta = path.join(tempPackage, '.library.json');
 
       return Q.nfcall(fs.writeFile, pkgMeta, 'w00t')
         .then(function () {
@@ -194,7 +194,7 @@ describe('ResolveCache', function () {
             }, function (err) {
               expect(err).to.be.an(Error);
               expect(err.code).to.equal('EMALFORMED');
-              expect(err.message).to.contain(path.join(tempPackage, '.ano.json'));
+              expect(err.message).to.contain(path.join(tempPackage, '.library.json'));
 
               next();
             });
@@ -435,7 +435,7 @@ describe('ResolveCache', function () {
       fs.mkdirSync(path.join(sourceDir, '0.2.0'));
 
       // Create an invalid package meta
-      fs.writeFileSync(path.join(sourceDir, '0.2.0', '.ano.json'), 'w00t');
+      fs.writeFileSync(path.join(sourceDir, '0.2.0', '.library.json'), 'w00t');
 
       resolveCache.retrieve(source, '~0.1.0')
         .spread(function () {
@@ -460,23 +460,23 @@ describe('ResolveCache', function () {
 
       json.version = '0.0.1';
       fs.mkdirSync(path.join(sourceDir, '0.0.1'));
-      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0';
       fs.mkdirSync(path.join(sourceDir, '0.1.0'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0-rc.1';
       fs.mkdirSync(path.join(sourceDir, '0.1.0-rc.1'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.9';
       fs.mkdirSync(path.join(sourceDir, '0.1.9'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.9', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.9', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.2.0';
       fs.mkdirSync(path.join(sourceDir, '0.2.0'));
-      fs.writeFileSync(path.join(sourceDir, '0.2.0', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.2.0', '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.retrieve(source, '~0.1.0')
         .spread(function (canonicalDir, pkgMeta) {
@@ -507,11 +507,11 @@ describe('ResolveCache', function () {
 
       json.version = '0.1.0-rc.1';
       fs.mkdirSync(path.join(sourceDir, '0.1.0-rc.1'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0-rc.2';
       fs.mkdirSync(path.join(sourceDir, '0.1.0-rc.2'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.2', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0-rc.2', '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.retrieve(source, '~0.1.0')
         .spread(function (canonicalDir, pkgMeta) {
@@ -536,22 +536,22 @@ describe('ResolveCache', function () {
 
       json.version = '0.1.0';
       fs.mkdirSync(path.join(sourceDir, '0.1.0'));
-      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0+build.4';
       encoded = encodeURIComponent('0.1.0+build.4');
       fs.mkdirSync(path.join(sourceDir, encoded));
-      fs.writeFileSync(path.join(sourceDir, encoded, '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, encoded, '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0+build.5';
       encoded = encodeURIComponent('0.1.0+build.5');
       fs.mkdirSync(path.join(sourceDir, encoded));
-      fs.writeFileSync(path.join(sourceDir, encoded, '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, encoded, '.library.json'), JSON.stringify(json, null, '  '));
 
       json.version = '0.1.0+build.6';
       encoded = encodeURIComponent('0.1.0+build.6');
       fs.mkdirSync(path.join(sourceDir, encoded));
-      fs.writeFileSync(path.join(sourceDir, encoded, '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, encoded, '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.retrieve(source, '0.1.0+build.5')
         .spread(function (canonicalDir, pkgMeta) {
@@ -574,7 +574,7 @@ describe('ResolveCache', function () {
       fs.mkdirSync(sourceDir);
 
       fs.mkdirSync(path.join(sourceDir, '_wildcard'));
-      fs.writeFileSync(path.join(sourceDir, '_wildcard', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '_wildcard', '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.retrieve(source, '*')
         .spread(function (canonicalDir, pkgMeta) {
@@ -596,10 +596,10 @@ describe('ResolveCache', function () {
       fs.mkdirSync(sourceDir);
 
       fs.mkdirSync(path.join(sourceDir, 'some-branch'));
-      fs.writeFileSync(path.join(sourceDir, 'some-branch', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, 'some-branch', '.library.json'), JSON.stringify(json, null, '  '));
 
       fs.mkdirSync(path.join(sourceDir, 'other-branch'));
-      fs.writeFileSync(path.join(sourceDir, 'other-branch', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, 'other-branch', '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.retrieve(source, 'some-branch')
         .spread(function (canonicalDir, pkgMeta) {
@@ -868,37 +868,37 @@ describe('ResolveCache', function () {
       fs.mkdirSync(sourceDir);
       fs.mkdirSync(path.join(sourceDir, '0.0.1'));
       json.version = '0.0.1';
-      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       fs.mkdirSync(path.join(sourceDir, '0.1.0'));
       json.version = '0.1.0';
-      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.1.0', '.library.json'), JSON.stringify(json, null, '  '));
 
       delete json.version;
 
       fs.mkdirSync(path.join(sourceDir, 'foo'));
       json._target = 'foo';
-      fs.writeFileSync(path.join(sourceDir, 'foo', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, 'foo', '.library.json'), JSON.stringify(json, null, '  '));
 
       fs.mkdirSync(path.join(sourceDir, 'bar'));
       json._target = 'bar';
-      fs.writeFileSync(path.join(sourceDir, 'bar', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, 'bar', '.library.json'), JSON.stringify(json, null, '  '));
 
       fs.mkdirSync(path.join(sourceDir, 'aa'));
       json._target = 'aa';
-      fs.writeFileSync(path.join(sourceDir, 'aa', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, 'aa', '.library.json'), JSON.stringify(json, null, '  '));
 
       delete json._target;
 
       fs.mkdirSync(sourceDir2);
       fs.mkdirSync(path.join(sourceDir2, '0.2.1'));
       json.version = '0.2.1';
-      fs.writeFileSync(path.join(sourceDir2, '0.2.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir2, '0.2.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       fs.mkdirSync(path.join(sourceDir2, '0.2.0'));
       json.name = 'abc';
       json.version = '0.2.0';
-      fs.writeFileSync(path.join(sourceDir2, '0.2.0', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir2, '0.2.0', '.library.json'), JSON.stringify(json, null, '  '));
 
       resolveCache.list()
         .then(function (entries) {
@@ -935,7 +935,7 @@ describe('ResolveCache', function () {
       fs.mkdirSync(sourceDir);
       fs.mkdirSync(path.join(sourceDir, '0.0.1'));
       json.version = '0.0.1';
-      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.0.1', '.library.json'), JSON.stringify(json, null, '  '));
 
       // Create lurking files
       fs.writeFileSync(path.join(cacheDir, 'foo'), 'w00t');
@@ -975,12 +975,12 @@ describe('ResolveCache', function () {
       fs.mkdirSync(path.join(sourceDir, '0.0.1'));
 
       fs.mkdirSync(path.join(sourceDir, '0.0.2'));
-      fs.writeFileSync(path.join(sourceDir, '0.0.2', '.ano.json'), 'w00t');
+      fs.writeFileSync(path.join(sourceDir, '0.0.2', '.library.json'), 'w00t');
 
       // Create valid version
       fs.mkdirSync(path.join(sourceDir, '0.0.3'));
       json.version = '0.0.3';
-      fs.writeFileSync(path.join(sourceDir, '0.0.3', '.ano.json'), JSON.stringify(json, null, '  '));
+      fs.writeFileSync(path.join(sourceDir, '0.0.3', '.library.json'), JSON.stringify(json, null, '  '));
 
       // It should not error out
       resolveCache.list()

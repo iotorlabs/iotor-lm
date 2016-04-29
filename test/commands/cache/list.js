@@ -6,15 +6,15 @@ var cacheList = helpers.command('cache/list');
 describe('bower cache list', function () {
 
   var cacheDir = new helpers.TempDir({
-    '87323d6d4e48be291a9616a033d4cc6c/1.3.8/.ano.json': {
+    '87323d6d4e48be291a9616a033d4cc6c/1.3.8/.library.json': {
       name: 'angular',
       version: '1.3.8'
     },
-    '87323d6d4e48be291a9616a033d4cc6c/1.3.9/.ano.json': {
+    '87323d6d4e48be291a9616a033d4cc6c/1.3.9/.library.json': {
       name: 'angular',
       version: '1.3.9'
     },
-    '9eaed103d6a7e78d91f673cfad796850/1.0.0/.ano.json': {
+    '9eaed103d6a7e78d91f673cfad796850/1.0.0/.library.json': {
       name: 'jquery',
       version: '1.0.0'
     }

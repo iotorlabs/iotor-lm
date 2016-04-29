@@ -7,14 +7,14 @@ var link = helpers.command('link');
 describe('bower link', function () {
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package',
     },
     'index.js': 'Hello World!'
   });
 
   var otherPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package2',
     },
     'index.js': 'Welcome World!'

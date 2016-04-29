@@ -69,9 +69,9 @@ exports.TempDir = (function () {
 
     this.meta = function (tag) {
       if (tag) {
-        return files[tag]['ano.json'];
+        return files[tag]['library.json'];
       } else {
-        return files['ano.json'];
+        return files['library.json'];
       }
     };
 

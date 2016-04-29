@@ -11,14 +11,14 @@ describe('bower home', function () {
   });
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package',
       homepage: 'http://bower.io'
     }
   });
 
   var wrongPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package'
     }
   });

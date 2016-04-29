@@ -259,7 +259,7 @@ describe('PackageRepository', function () {
 
       copy.copyDir(testPackage, tempPackage, {ignore: ['.git']})
         .then(function () {
-          fs.writeFileSync(path.join(tempPackage, '.ano.json'), JSON.stringify(json));
+          fs.writeFileSync(path.join(tempPackage, '.library.json'), JSON.stringify(json));
 
           return packageRepository.fetch({name: '', source: 'foo', target: '~0.1.0'})
             .spread(function (canonicalDir, pkgMeta) {
@@ -302,7 +302,7 @@ describe('PackageRepository', function () {
 
       copy.copyDir(testPackage, tempPackage, {ignore: ['.git']})
         .then(function () {
-          fs.writeFileSync(path.join(tempPackage, '.ano.json'), JSON.stringify(json));
+          fs.writeFileSync(path.join(tempPackage, '.library.json'), JSON.stringify(json));
 
           return packageRepository.fetch({name: '', source: 'foo', target: '~0.2.0'})
             .spread(function (canonicalDir, pkgMeta) {
@@ -345,7 +345,7 @@ describe('PackageRepository', function () {
 
       copy.copyDir(testPackage, tempPackage, {ignore: ['.git']})
         .then(function () {
-          fs.writeFileSync(path.join(tempPackage, '.ano.json'), JSON.stringify(json));
+          fs.writeFileSync(path.join(tempPackage, '.library.json'), JSON.stringify(json));
 
           return packageRepository.fetch({name: '', source: 'foo', target: '~0.2.0'})
             .spread(function (canonicalDir, pkgMeta) {
@@ -386,7 +386,7 @@ describe('PackageRepository', function () {
 
       copy.copyDir(testPackage, tempPackage, {ignore: ['.git']})
         .then(function () {
-          fs.writeFileSync(path.join(tempPackage, '.ano.json'), JSON.stringify(json));
+          fs.writeFileSync(path.join(tempPackage, '.library.json'), JSON.stringify(json));
 
           packageRepository._config.offline = true;
           return packageRepository.fetch({name: '', source: 'foo', target: '~0.2.0'})

@@ -45,7 +45,7 @@ describe('bower install', function () {
   });
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package'
     }
   }).prepare();
@@ -54,24 +54,24 @@ describe('bower install', function () {
 
   gitPackage.prepareGit({
     '1.0.0': {
-      'ano.json': {
+      'library.json': {
         name: 'package'
       },
       'version.txt': '1.0.0'
     },
     '1.0.1': {
-      'ano.json': {
+      'library.json': {
         name: 'package'
       },
       'version.txt': '1.0.1'
     }
   });
 
-  it('writes to ano.json if --save flag is used', function () {
+  it('writes to library.json if --save flag is used', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -81,15 +81,15 @@ describe('bower install', function () {
         save: true
       }
     ]).then(function () {
-      expect(tempDir.read('ano.json')).to.contain('dependencies');
+      expect(tempDir.read('library.json')).to.contain('dependencies');
     });
   });
 
-  it('writes to ano.json if save config setting is set to true', function () {
+  it('writes to library.json if save config setting is set to true', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -99,20 +99,20 @@ describe('bower install', function () {
         save: true
       }
     ]).then(function () {
-      expect(tempDir.read('ano.json')).to.contain('dependencies');
+      expect(tempDir.read('library.json')).to.contain('dependencies');
     });
   });
 
-  it('writes an exact version number to dependencies in ano.json if --save --save-exact flags are used', function () {
+  it('writes an exact version number to dependencies in library.json if --save --save-exact flags are used', function () {
     mainPackage.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         version: '1.2.3'
       }
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -123,20 +123,20 @@ describe('bower install', function () {
         save: true
       }
     ]).then(function () {
-      expect(tempDir.readJson('ano.json').dependencies.package).to.equal(mainPackage.path + '#1.2.3');
+      expect(tempDir.readJson('library.json').dependencies.package).to.equal(mainPackage.path + '#1.2.3');
     });
   });
 
-  it('writes an exact version number to dependencies in ano.json if save and save-exact config settings are set to true', function () {
+  it('writes an exact version number to dependencies in library.json if save and save-exact config settings are set to true', function () {
     mainPackage.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         version: '1.2.3'
       }
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -147,20 +147,20 @@ describe('bower install', function () {
         save: true
       }
     ]).then(function () {
-      expect(tempDir.readJson('ano.json').dependencies.package).to.equal(mainPackage.path + '#1.2.3');
+      expect(tempDir.readJson('library.json').dependencies.package).to.equal(mainPackage.path + '#1.2.3');
     });
   });
 
-  it('writes an exact version number to devDependencies in ano.json if --save-dev --save-exact flags are used', function () {
+  it('writes an exact version number to devDependencies in library.json if --save-dev --save-exact flags are used', function () {
     mainPackage.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         version: '0.1.0'
       }
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -171,20 +171,20 @@ describe('bower install', function () {
         saveDev: true
       }
     ]).then(function () {
-      expect(tempDir.readJson('ano.json').devDependencies.package).to.equal(mainPackage.path + '#0.1.0');
+      expect(tempDir.readJson('library.json').devDependencies.package).to.equal(mainPackage.path + '#0.1.0');
     });
   });
 
-  it('writes an exact version number to devDependencies in ano.json if save-exact config setting is true and --save-dev flag is used', function () {
+  it('writes an exact version number to devDependencies in library.json if save-exact config setting is true and --save-dev flag is used', function () {
     mainPackage.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         version: '0.1.0'
       }
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -196,7 +196,7 @@ describe('bower install', function () {
         saveExact: true
       }
     ]).then(function () {
-      expect(tempDir.readJson('ano.json').devDependencies.package).to.equal(mainPackage.path + '#0.1.0');
+      expect(tempDir.readJson('library.json').devDependencies.package).to.equal(mainPackage.path + '#0.1.0');
     });
   });
 
@@ -209,7 +209,7 @@ describe('bower install', function () {
       '.anorc': {
         directory: 'assets'
       },
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -231,7 +231,7 @@ describe('bower install', function () {
       '.anorc': {
         directory: '/tmp/bower-absolute-destination-directory'
       },
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -257,7 +257,7 @@ describe('bower install', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -279,7 +279,7 @@ describe('bower install', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -300,7 +300,7 @@ describe('bower install', function () {
   // To be discussed, but that's the implementation now
   it('does not run hooks if nothing is installed', function () {
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       },
       '.anorc': {
@@ -316,16 +316,16 @@ describe('bower install', function () {
     });
   });
 
-  it('runs postinstall after ano.json is written', function () {
+  it('runs postinstall after library.json is written', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       },
       '.anorc': {
         scripts: {
-          postinstall: 'node -e \'var fs = require("fs"); fs.writeFileSync("hook.txt", fs.readFileSync("ano.json"));\''
+          postinstall: 'node -e \'var fs = require("fs"); fs.writeFileSync("hook.txt", fs.readFileSync("library.json"));\''
         }
       }
     });
@@ -343,7 +343,7 @@ describe('bower install', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -373,7 +373,7 @@ describe('bower install', function () {
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -391,13 +391,13 @@ describe('bower install', function () {
   it('works for git repositories', function () {
     gitPackage.prepareGit({
       '1.0.0': {
-        'ano.json': {
+        'library.json': {
           name: 'package'
         },
         'version.txt': '1.0.0'
       },
       '1.0.1': {
-        'ano.json': {
+        'library.json': {
           name: 'package'
         },
         'version.txt': '1.0.1'
@@ -405,7 +405,7 @@ describe('bower install', function () {
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'
@@ -421,7 +421,7 @@ describe('bower install', function () {
   it('works for dependencies that point to tar files', function () {
     var packageDir = path.join(__dirname, '../assets/package-tar.tar');
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: packageDir
@@ -437,13 +437,13 @@ describe('bower install', function () {
   it('does not install ignored dependencies', function () {
     mainPackage.prepare();
     var package2 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package2',
       }
     }).prepare();
 
     var package3 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package3',
         dependencies: {
           package2: package2.path,
@@ -453,7 +453,7 @@ describe('bower install', function () {
     }).prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test_tw',
         dependencies: {
           package3: package3.path
@@ -473,13 +473,13 @@ describe('bower install', function () {
   it('does not install ignored dependencies if run multiple times', function () {
     mainPackage.prepare();
     var package2 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package2',
       }
     }).prepare();
 
     var package3 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package3',
         dependencies: {
           package2: package2.path,
@@ -489,7 +489,7 @@ describe('bower install', function () {
     }).prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test_tw',
         dependencies: {
           package3: package3.path
@@ -511,7 +511,7 @@ describe('bower install', function () {
     this.timeout(10000);
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test_tw',
         dependencies: {
           pure: 'http://github.com/yahoo/pure/archive/v0.6.0.tar.gz'
@@ -572,7 +572,7 @@ describe('bower install', function () {
 
     //// Attempt to install the package from the archive
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });
@@ -605,7 +605,7 @@ describe('bower install', function () {
 
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test'
       }
     });

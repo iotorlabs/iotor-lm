@@ -53,7 +53,7 @@ else describe('SvnResolver', function () {
 
     afterEach(function (next) {
       clearResolverRuntimeCache();
-      rimraf(path.join(tempDir, '.ano.json'), next);
+      rimraf(path.join(tempDir, '.library.json'), next);
     });
 
     after(function (next) {
@@ -608,14 +608,14 @@ else describe('SvnResolver', function () {
     });
 
     afterEach(function (next) {
-      rimraf(path.join(tempDir, '.ano.json'), next);
+      rimraf(path.join(tempDir, '.library.json'), next);
     });
 
     after(function (next) {
       rimraf(tempDir, next);
     });
 
-    it('should save the resolution to the .ano.json to be used later by .hasNew', function (next) {
+    it('should save the resolution to the .library.json to be used later by .hasNew', function (next) {
       var resolver = create('foo');
 
       resolver._resolution = {type: 'version', tag: '0.0.1'};
@@ -623,7 +623,7 @@ else describe('SvnResolver', function () {
 
       resolver._savePkgMeta({name: 'foo', version: '0.0.1'})
         .then(function () {
-          return Q.nfcall(fs.readFile, path.join(tempDir, '.ano.json'));
+          return Q.nfcall(fs.readFile, path.join(tempDir, '.library.json'));
         })
         .then(function (contents) {
           var json = JSON.parse(contents.toString());
@@ -636,7 +636,7 @@ else describe('SvnResolver', function () {
 
     it('should save the release in the package meta', function (next) {
       var resolver = create('foo');
-      var metaFile = path.join(tempDir, '.ano.json');
+      var metaFile = path.join(tempDir, '.library.json');
 
       // Test with type 'version'
       resolver._resolution = {type: 'version', tag: '0.0.1', commit: '1'};
@@ -711,7 +711,7 @@ else describe('SvnResolver', function () {
 
       resolver._savePkgMeta({name: 'foo'})
         .then(function () {
-          return Q.nfcall(fs.readFile, path.join(tempDir, '.ano.json'));
+          return Q.nfcall(fs.readFile, path.join(tempDir, '.library.json'));
         })
         .then(function (contents) {
           var json = JSON.parse(contents.toString());
@@ -730,7 +730,7 @@ else describe('SvnResolver', function () {
 
       resolver._savePkgMeta({name: 'foo', version: '0.0.1'})
         .then(function () {
-          return Q.nfcall(fs.readFile, path.join(tempDir, '.ano.json'));
+          return Q.nfcall(fs.readFile, path.join(tempDir, '.library.json'));
         })
         .then(function (contents) {
           var json = JSON.parse(contents.toString());
@@ -759,7 +759,7 @@ else describe('SvnResolver', function () {
 
       resolver._savePkgMeta({name: 'foo', version: '0.0.0'})
         .then(function () {
-          return Q.nfcall(fs.readFile, path.join(tempDir, '.ano.json'));
+          return Q.nfcall(fs.readFile, path.join(tempDir, '.library.json'));
         })
         .then(function (contents) {
           var json = JSON.parse(contents.toString());
@@ -780,7 +780,7 @@ else describe('SvnResolver', function () {
 
       resolver._savePkgMeta({name: 'foo', version: '0.0.1'})
         .then(function () {
-          return Q.nfcall(fs.readFile, path.join(tempDir, '.ano.json'));
+          return Q.nfcall(fs.readFile, path.join(tempDir, '.library.json'));
         }, null)
         .then(function (contents) {
           var json = JSON.parse(contents.toString());

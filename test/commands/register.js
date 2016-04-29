@@ -38,7 +38,7 @@ var registerFactory = function (canonicalDir, pkgMeta) {
 describe('bower register', function () {
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package'
     }
   });
@@ -64,7 +64,7 @@ describe('bower register', function () {
   });
 
   it('errors if trying to register private package', function () {
-    mainPackage.prepare({'ano.json': {private: true}});
+    mainPackage.prepare({'library.json': {private: true}});
 
     var register = registerFactory(mainPackage.path, mainPackage.meta());
     return helpers.run(register, ['some-name', 'git://fake-url.git'])

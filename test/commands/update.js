@@ -11,7 +11,7 @@ describe('bower update', function () {
   var tempDir = new helpers.TempDir();
 
   var subPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'subPackage'
     }
   }).prepare();
@@ -20,13 +20,13 @@ describe('bower update', function () {
 
   gitPackage.prepareGit({
     '1.0.0': {
-      'ano.json': {
+      'library.json': {
         name: 'package'
       },
       'version.txt': '1.0.0'
     },
     '1.0.1': {
-      'ano.json': {
+      'library.json': {
         name: 'package',
         dependencies: {
           subPackage: subPackage.path
@@ -37,7 +37,7 @@ describe('bower update', function () {
   });
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package'
     }
   }).prepare();
@@ -77,7 +77,7 @@ describe('bower update', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -86,20 +86,20 @@ describe('bower update', function () {
     });
 
     return update().then(function () {
-      expect(tempDir.exists('ano_libraries/package/ano.json')).to.equal(true);
-      expect(tempDir.read('ano_libraries/package/ano.json')).to.contain('"name": "package"');
+      expect(tempDir.exists('ano_libraries/package/library.json')).to.equal(true);
+      expect(tempDir.read('ano_libraries/package/library.json')).to.contain('"name": "package"');
     });
   });
 
   it('does not install ignored dependencies', function () {
     var package3 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package3'
       }
     }).prepare();
 
     var package2 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package2',
         dependencies: {
           package3: package3.path
@@ -108,7 +108,7 @@ describe('bower update', function () {
     }).prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package2: package2.path
@@ -120,20 +120,20 @@ describe('bower update', function () {
     });
 
     return update().then(function () {
-      expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
+      expect(tempDir.exists('ano_libraries/package2/library.json')).to.equal(true);
       expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
     });
   });
 
   it('does not install ignored dependencies if run multiple times', function () {
     var package3 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package3'
       }
     }).prepare();
 
     var package2 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package2',
         dependencies: {
           package3: package3.path
@@ -142,7 +142,7 @@ describe('bower update', function () {
     }).prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package2: package2.path
@@ -155,7 +155,7 @@ describe('bower update', function () {
 
     return update().then(function () {
       return update().then(function () {
-        expect(tempDir.exists('ano_libraries/package2/ano.json')).to.equal(true);
+        expect(tempDir.exists('ano_libraries/package2/library.json')).to.equal(true);
         expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
       });
     });
@@ -166,7 +166,7 @@ describe('bower update', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -188,7 +188,7 @@ describe('bower update', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -210,7 +210,7 @@ describe('bower update', function () {
     mainPackage.prepare();
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: mainPackage.path
@@ -234,7 +234,7 @@ describe('bower update', function () {
 
   it('updates a package', function () {
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'
@@ -247,7 +247,7 @@ describe('bower update', function () {
       expect(tempDir.read('ano_libraries/package/version.txt')).to.contain('1.0.0');
 
       tempDir.prepare({
-        'ano.json': {
+        'library.json': {
           name: 'test',
           dependencies: {
             package: gitPackage.path + '#1.0.1'
@@ -265,14 +265,14 @@ describe('bower update', function () {
     this.timeout(15000);
 
     var package3 = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package3'
       }
     }).prepare();
 
     var package2 = new helpers.TempDir().prepareGit({
       '1.0.0': {
-        'ano.json': {
+        'library.json': {
           name: 'package2',
           version: '1.0.0',
           dependencies: {
@@ -281,7 +281,7 @@ describe('bower update', function () {
         }
       },
       '1.0.1': {
-        'ano.json': {
+        'library.json': {
           name: 'package2',
           version: '1.0.1',
           dependencies: {
@@ -292,7 +292,7 @@ describe('bower update', function () {
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package2: package2.path + '#1.0.0'
@@ -305,11 +305,11 @@ describe('bower update', function () {
 
     return install().then(function () {
 
-      expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.0');
+      expect(tempDir.readJson('ano_libraries/package2/library.json').version).to.equal('1.0.0');
       expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
 
       tempDir.prepare({
-        'ano.json': {
+        'library.json': {
           name: 'test',
           dependencies: {
             package2: package2.path + '#1.0.1'
@@ -321,7 +321,7 @@ describe('bower update', function () {
       });
 
       return update().then(function () {
-        expect(tempDir.readJson('ano_libraries/package2/ano.json').version).to.equal('1.0.1');
+        expect(tempDir.readJson('ano_libraries/package2/library.json').version).to.equal('1.0.1');
         expect(tempDir.exists('ano_libraries/package3')).to.equal(false);
       });
     });
@@ -329,7 +329,7 @@ describe('bower update', function () {
 
   it('runs preinstall hook when updating a package', function () {
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'
@@ -339,7 +339,7 @@ describe('bower update', function () {
 
     return install().then(function () {
       tempDir.prepare({
-        'ano.json': {
+        'library.json': {
           name: 'test',
           dependencies: {
             package: gitPackage.path + '#1.0.1'
@@ -361,7 +361,7 @@ describe('bower update', function () {
 
   it('runs postinstall hook when updating a package', function () {
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'
@@ -371,7 +371,7 @@ describe('bower update', function () {
 
     return install().then(function () {
       tempDir.prepare({
-        'ano.json': {
+        'library.json': {
           name: 'test',
           dependencies: {
             package: gitPackage.path + '#1.0.1'

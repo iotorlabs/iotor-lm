@@ -64,7 +64,7 @@ describe('bower list', function () {
   it('lists 1 dependency when 1 local package installed', function () {
 
     var mainPackage = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         main: 'test.txt'
       }
@@ -97,7 +97,7 @@ describe('bower list', function () {
   it('lists 1 dependency with relative paths when 1 local package installed', function () {
 
     var mainPackage = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         // main: 'test.txt'
       }
@@ -125,7 +125,7 @@ describe('bower list', function () {
   it('lists 1 dependency with 1 source relative source mapping when 1 local package installed', function () {
 
     var mainPackage = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         main: 'test.txt'
       }
@@ -145,7 +145,7 @@ describe('bower list', function () {
   it('lists 1 dependency with 2 source relative source mapping when 1 local package installed', function () {
 
     var mainPackage = new helpers.TempDir({
-      'ano.json': {
+      'library.json': {
         name: 'package',
         main: ['test.txt', 'test2.txt']
       }
@@ -167,14 +167,14 @@ describe('bower list', function () {
   it('lists 1 dependency when 1 git package installed', function () {
     gitPackage.prepareGit({
       '1.0.0': {
-        'ano.json': {
+        'library.json': {
           name: 'package',
           main: 'test.txt'
         },
         'version.txt': '1.0.0'
       },
       '1.0.1': {
-        'ano.json': {
+        'library.json': {
           name: 'package',
           main: 'test2.txt'
         },
@@ -183,7 +183,7 @@ describe('bower list', function () {
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'
@@ -217,14 +217,14 @@ describe('bower list', function () {
   it('lists 1 dependency with relative paths when 1 git package installed', function () {
     gitPackage.prepareGit({
       '1.0.0': {
-        'ano.json': {
+        'library.json': {
           name: 'package',
           main: 'test.txt'
         },
         'version.txt': '1.0.0'
       },
       '1.0.1': {
-        'ano.json': {
+        'library.json': {
           name: 'package',
           main: 'test2.txt'
         },
@@ -233,7 +233,7 @@ describe('bower list', function () {
     });
 
     tempDir.prepare({
-      'ano.json': {
+      'library.json': {
         name: 'test',
         dependencies: {
           package: gitPackage.path + '#1.0.0'

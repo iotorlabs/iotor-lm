@@ -6,7 +6,7 @@ var prune = helpers.command('prune');
 describe('bower home', function () {
 
   var mainPackage = new helpers.TempDir({
-    'ano.json': {
+    'library.json': {
       name: 'package',
       dependencies: {
         jquery: '*'
@@ -28,7 +28,7 @@ describe('bower home', function () {
   it('removes extraneous packages', function () {
     mainPackage.prepare({
       'ano_libraries/angular/angular.js': 'angular source',
-      'ano_libraries/angular/.ano.json': {name: 'angular'}
+      'ano_libraries/angular/.library.json': {name: 'angular'}
     });
 
     return helpers.run(prune, [{}, {cwd: mainPackage.path}]).then(function () {
@@ -51,9 +51,9 @@ describe('bower home', function () {
   it('deals with custom directory', function () {
     mainPackage.prepare({
       '.anorc': {directory: 'components'},
-      'ano_libraries/angular/.ano.json': {name: 'angular'},
+      'ano_libraries/angular/.library.json': {name: 'angular'},
       'ano_libraries/angular/angular.js': 'angular source',
-      'components/angular/.ano.json': {name: 'angular'},
+      'components/angular/.library.json': {name: 'angular'},
       'components/angular/angular.js': 'angular source'
     });
 

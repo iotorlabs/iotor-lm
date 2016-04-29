@@ -25,8 +25,8 @@ describe('alm info', function () {
   };
 
   var mainPackage = new helpers.TempDir({
-    '0.1.2': {'ano.json': meta},
-    '0.1.3': {'ano.json': meta2}
+    '0.1.2': {'library.json': meta},
+    '0.1.3': {'library.json': meta2}
   });
 
   it('just returns if not package is specified', function () {

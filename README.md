@@ -28,13 +28,13 @@ See complete command line reference at [bower.io/docs/api/](http://bower.io/docs
 ### Installing libraries and dependencies
 
 ```sh
-# install dependencies listed in ano.json
+# install dependencies listed in library.json
 $ alm install
 
-# install a library and add it to ano.json
+# install a library and add it to library.json
 $ alm install <library> --save
 
-# install specific version of a library and add it to ano.json
+# install specific version of a library and add it to library.json
 $ alm install <library>#<version> --save
 ```
 

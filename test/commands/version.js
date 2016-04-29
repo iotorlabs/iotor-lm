@@ -3,18 +3,21 @@ var expect = require('expect.js');
 var helpers = require('../helpers');
 var version = helpers.require('lib/commands').version;
 
-describe('bower version', function () {
+describe('ano version', function () {
 
-  var mainPackage = new helpers.TempDir({
-    'v0.0.0': {
-      'ano.json': {
-        name: 'foobar'
+  var mainPackage, packageWithoutTags;
+
+  before(function () {
+    mainPackage = new helpers.TempDir({
+      'v0.0.0': {
+        'library.json': {
+          name: 'foobar'
+        }
       }
-    }
+    });
+
+    packageWithoutTags = new helpers.TempDir({});
   });
-
-  var packageWithoutTags = new helpers.TempDir({});
-
 
   it('bumps patch version', function () {
     mainPackage.prepareGit();

@@ -90,7 +90,7 @@ describe('Resolver', function () {
     });
 
     beforeEach(function () {
-      fs.writeFileSync(path.join(tempDir, '.ano.json'), JSON.stringify({
+      fs.writeFileSync(path.join(tempDir, '.library.json'), JSON.stringify({
         name: 'test'
       }));
     });
@@ -595,12 +595,11 @@ describe('Resolver', function () {
       rimraf(tempDir, next);
     });
 
-    it('should read the ano.json file', function (next) {
+    it('should read the library.json file', function (next) {
       var resolver = create('foo');
 
       mkdirp.sync(tempDir);
-      fs.writeFileSync(path.join(tempDir, 'ano.json'), JSON.stringify({name: 'foo', version: '0.0.0'}));
-      fs.writeFileSync(path.join(tempDir, 'library.json'), JSON.stringify({name: 'bar', version: '0.0.0'}));
+      fs.writeFileSync(path.join(tempDir, 'library.json'), JSON.stringify({name: 'foo', version: '0.0.0'}));
 
       resolver._readJson(tempDir)
         .then(function (meta) {
@@ -686,7 +685,7 @@ describe('Resolver', function () {
 
       mkdirp.sync(tempDir);
 
-      // Checkout test package version 0.2.1 which has a ano.json
+      // Checkout test package version 0.2.1 which has a library.json
       // with ignores
       cmd('git', ['checkout', '0.2.2'], {cwd: testPackage})
       // Copy its contents to the temporary dir
@@ -699,14 +698,14 @@ describe('Resolver', function () {
           // This is a very rudimentary check
           // Complete checks are made in the 'describe' below
           resolver._tempDir = tempDir;
-          json = JSON.parse(fs.readFileSync(path.join(tempDir, 'ano.json')).toString());
+          json = JSON.parse(fs.readFileSync(path.join(tempDir, 'library.json')).toString());
 
           return resolver._applyPkgMeta(json)
             .then(function () {
               expect(fs.existsSync(path.join(tempDir, 'foo'))).to.be(true);
               expect(fs.existsSync(path.join(tempDir, 'baz'))).to.be(true);
               expect(fs.existsSync(path.join(tempDir, 'test'))).to.be(false);
-              expect(fs.existsSync(path.join(tempDir, 'ano.json'))).to.be(true);
+              expect(fs.existsSync(path.join(tempDir, 'library.json'))).to.be(true);
               expect(fs.existsSync(path.join(tempDir, 'main.js'))).to.be(true);
               expect(fs.existsSync(path.join(tempDir, 'more/docs'))).to.be(false);
               expect(fs.existsSync(path.join(tempDir, 'more/assets'))).to.be(false);
@@ -738,7 +737,7 @@ describe('Resolver', function () {
     });
 
     afterEach(function (next) {
-      rimraf(path.join(tempDir, '.ano.json'), next);
+      rimraf(path.join(tempDir, '.library.json'), next);
     });
 
     after(function (next) {
@@ -774,14 +773,14 @@ describe('Resolver', function () {
         .done();
     });
 
-    it('should save the package meta to the package meta file (.ano.json)', function (next) {
+    it('should save the package meta to the package meta file (.library.json)', function (next) {
       var resolver = create('foo');
 
       resolver._tempDir = tempDir;
 
       resolver._savePkgMeta({name: 'bar'})
         .then(function (retMeta) {
-          fs.readFile(path.join(tempDir, '.ano.json'), function (err, contents) {
+          fs.readFile(path.join(tempDir, '.library.json'), function (err, contents) {
             if (err) return next(err);
 
             contents = contents.toString();

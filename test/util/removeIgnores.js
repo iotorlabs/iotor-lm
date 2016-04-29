@@ -8,7 +8,7 @@ var removeIgnores = require('../../lib/util/removeIgnores');
 describe('removeIgnores', function () {
 
   var tempDir = new helpers.TempDir({
-    'ano.json': {},
+    'library.json': {},
     'index.js': 'Not to ignore',
     'node_modules/underscore/index.js': 'Should be ignored'
   });
@@ -31,35 +31,35 @@ describe('removeIgnores', function () {
   it('removes all files in directory', function () {
     return ignoreTest(tempDir.path,
       {ignore: ['node_modules/**/*']},
-      ['ano.json', 'index.js']
+      [ 'index.js', 'library.json']
     );
   });
 
   it('removes whole directory', function () {
     return ignoreTest(tempDir.path,
       {ignore: ['node_modules/']},
-      ['ano.json', 'index.js']
+      [ 'index.js', 'library.json']
     );
   });
 
   it('removes whole directory (no ending slash)', function () {
     return ignoreTest(tempDir.path,
       {ignore: ['node_modules']},
-      ['ano.json', 'index.js']
+      [ 'index.js', 'library.json']
     );
   });
 
   it('removes all but one file', function () {
     return ignoreTest(tempDir.path,
-      {ignore: ['**/*', '!ano.json']},
-      ['ano.json']
+      {ignore: ['**/*', '!library.json']},
+      ['library.json']
     );
   });
 
-  it('refuses to ignore ano.json', function () {
+  it('refuses to ignore library.json', function () {
     return ignoreTest(tempDir.path,
       {ignore: ['**/*', '!index.js']},
-      ['ano.json', 'index.js']
+      [ 'index.js', 'library.json']
     );
   });
 
@@ -67,7 +67,7 @@ describe('removeIgnores', function () {
     return ignoreTest(tempDir.path,
       {ignore: ['**/*', '!node_modules/underscore/index.js']},
       [
-        'ano.json',
+        'library.json',
         'node_modules/underscore/index.js'
       ]
     );

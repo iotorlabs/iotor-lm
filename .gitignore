@@ -6,10 +6,9 @@
 /test/reports
 /test/tmp/
 
-/ano.json
 /library.json
 /ano_libraries
 /test/sample
-!/test/sample/ano.json
+!/test/sample/library.json
 /npm-shrinkwrap.json
 .idea
