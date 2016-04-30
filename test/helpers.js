@@ -320,7 +320,7 @@ exports.localUrl = function (localPath) {
 // example: runBin('install') --> $ bower install
 exports.runBin = function (args) {
   args = args || [];
-  args.unshift(path.resolve(__dirname, '../bin/rlm'));
+  args.unshift(path.resolve(__dirname, '../bin/iotlm'));
   return spawnSync('node', args);
 };
 

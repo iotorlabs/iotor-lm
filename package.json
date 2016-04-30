@@ -1,18 +1,18 @@
 {
-  "name": "racoon-lm",
+  "name": "iotor-lm",
   "version": "1.10.0",
   "description": "An arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "racoonio/racoon-lm"
+    "url": "iotorlabs/iotor-lm"
   },
   "main": "lib",
   "bin": {
-    "rlm": "bin/rlm"
+    "iotlm": "bin/iotlm"
   },
-  "homepage": "http://github.com/taoyuan/racoon-lm",
+  "homepage": "http://github.com/taoyuan/iotor-lm",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -24,8 +24,8 @@
   ],
   "dependencies": {
     "abbrev": "^1.0.5",
-    "racoon-config": "latest",
-    "racoon-json": "latest",
+    "iotor-config": "latest",
+    "iotor-json": "latest",
     "archy": "1.0.0",
     "bower-endpoint-parser": "^0.2.2",
     "bower-logger": "^0.2.2",

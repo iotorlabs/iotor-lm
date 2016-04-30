@@ -68,7 +68,7 @@ module.exports = function (grunt) {
   grunt.registerTask('travis', ['eslint', 'exec:assets', 'exec:cover', 'exec:coveralls']);
   grunt.registerTask('default', 'test');
 
-  grunt.task.registerTask('publish', 'Perform final checks and publish rlm', function () {
+  grunt.task.registerTask('publish', 'Perform final checks and publish iotlm', function () {
     var npmVersion = JSON.parse(childProcess.execSync('npm version --json').toString()).npm.split('.');
     var npmMajor = parseInt(npmVersion[0], 10);
     var npmMinor = parseInt(npmVersion[1], 10);

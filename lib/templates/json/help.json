@@ -3,7 +3,7 @@
     "<command> [<args>] [<options>]"
   ],
   "commands": {
-    "cache": "Manage racoon cache",
+    "cache": "Manage iotor cache",
     "help": "Display help information about Ano",
     "home": "Opens a library homepage into your favorite browser",
     "info": "Info of a particular library",

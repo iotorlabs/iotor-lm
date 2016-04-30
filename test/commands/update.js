@@ -114,7 +114,7 @@ describe('bower update', function () {
           package2: package2.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         ignoredDependencies: ['package3']
       }
     });
@@ -148,7 +148,7 @@ describe('bower update', function () {
           package2: package2.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         ignoredDependencies: ['package3']
       }
     });
@@ -172,7 +172,7 @@ describe('bower update', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
         }
@@ -194,7 +194,7 @@ describe('bower update', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
         }
@@ -216,7 +216,7 @@ describe('bower update', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
         }
@@ -298,7 +298,7 @@ describe('bower update', function () {
           package2: package2.path + '#1.0.0'
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         ignoredDependencies: ['package3']
       }
     });
@@ -315,7 +315,7 @@ describe('bower update', function () {
             package2: package2.path + '#1.0.1'
           }
         },
-        '.racoonrc': {
+        '.iotorrc': {
           ignoredDependencies: ['package3']
         }
       });
@@ -345,7 +345,7 @@ describe('bower update', function () {
             package: gitPackage.path + '#1.0.1'
           }
         },
-        '.racoonrc': {
+        '.iotorrc': {
           scripts: {
             preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
           }
@@ -377,7 +377,7 @@ describe('bower update', function () {
             package: gitPackage.path + '#1.0.1'
           }
         },
-        '.racoonrc': {
+        '.iotorrc': {
           scripts: {
             preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\'',
             postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''

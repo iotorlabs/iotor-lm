@@ -1,10 +1,10 @@
 var expect = require('expect.js');
 var runBin = require('../helpers').runBin;
 
-describe('rlm', function () {
+describe('iotlm', function () {
   process.env.CI = '1';
 
-  it('runs rlm installation', function () {
+  it('runs iotlm installation', function () {
     var result = runBin();
     var text = result.stdout.toString();
 

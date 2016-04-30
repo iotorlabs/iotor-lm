@@ -456,7 +456,7 @@ describe('Resolver', function () {
           expect(dir.indexOf(osTempDir)).to.be(0);
           expect(dir.indexOf(config.tmp)).to.be(0);
 
-          expect(path.basename(dirname)).to.equal('racoon');
+          expect(path.basename(dirname)).to.equal('iotor');
           expect(path.dirname(path.dirname(dirname))).to.equal(osTempDir);
           next();
         })

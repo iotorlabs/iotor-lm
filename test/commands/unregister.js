@@ -33,7 +33,7 @@ describe('bower unregister', function () {
 
   it('errors if name is not provided', function () {
     return helpers.run(unregister).fail(function (reason) {
-      expect(reason.message).to.be('Usage: rlm unregister <name> <url>');
+      expect(reason.message).to.be('Usage: iotlm unregister <name> <url>');
       expect(reason.code).to.be('EINVFORMAT');
     });
   });

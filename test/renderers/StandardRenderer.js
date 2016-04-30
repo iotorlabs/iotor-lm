@@ -18,7 +18,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.eq(multiline(function () {/*
-       rlm foobar        hello world
+       iotlm foobar        hello world
 
        */
       }));
@@ -34,7 +34,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stderr).to.eq(multiline(function () {/*
-       rlm EFOOBAR       Hello error
+       iotlm EFOOBAR       Hello error
 
        */
       }));
@@ -51,7 +51,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stderr).to.eq(multiline(function () {/*
-       rlm EFOOBAR       Hello error
+       iotlm EFOOBAR       Hello error
 
        Additional error details:
        Some awesome details
@@ -134,7 +134,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm checkout      jquery#foobar
+       iotlm checkout      jquery#foobar
 
        */
       }));
@@ -151,7 +151,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm jquery#master           progress foobar
+       iotlm jquery#master           progress foobar
 
        */
       }));
@@ -168,7 +168,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm progress      jquery#master foobar
+       iotlm progress      jquery#master foobar
 
        */
       }));
@@ -185,7 +185,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm jquery#master            extract foobar
+       iotlm jquery#master            extract foobar
 
        */
       }));
@@ -376,7 +376,7 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm origin                    cached message
+       iotlm origin                    cached message
 
        */
       }));
@@ -405,9 +405,9 @@ describe('StandardRenderer', function () {
       });
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
-       rlm short-origin             generic message
-       rlm very-very-long-origin-string          generic message
-       rlm short-origin                          generic message
+       iotlm short-origin             generic message
+       iotlm very-very-long-origin-string          generic message
+       iotlm short-origin                          generic message
 
        */
       }));
@@ -650,8 +650,8 @@ describe('StandardRenderer', function () {
          - 1.2.1
          - 1.2.2
 
-       Show 4 additional prereleases with ‘rlm info foo --verbose’
-       You can request info for a specific version with 'rlm info foo#<version>'
+       Show 4 additional prereleases with ‘iotlm info foo --verbose’
+       You can request info for a specific version with 'iotlm info foo#<version>'
 
        */
       }));
@@ -692,7 +692,7 @@ describe('StandardRenderer', function () {
          - 1.3.0-rc.5
          - 1.3.0-beta.18
 
-       You can request info for a specific version with 'rlm info foo#<version>'
+       You can request info for a specific version with 'iotlm info foo#<version>'
 
        */
       }));
@@ -738,7 +738,7 @@ describe('StandardRenderer', function () {
     }).spread(function (stdout, stderr) {
       if (helpers.isWin()) {
         expect(stdout).to.equal(multiline(function () {/*
-         rlm                    link ./bar > ./foo
+         iotlm                    link ./bar > ./foo
 
          jquery#0.1.2 components\jquery
 
@@ -746,7 +746,7 @@ describe('StandardRenderer', function () {
         }));
       } else {
         expect(stdout).to.equal(multiline(function () {/*
-         rlm                    link ./bar > ./foo
+         iotlm                    link ./bar > ./foo
 
          jquery#0.1.2 components/jquery
 
@@ -795,7 +795,7 @@ describe('StandardRenderer', function () {
        All valid semver tags on http://jquery.io will be available as versions.
        To publish a new version, just release a valid semver tag.
 
-       Run rlm info jquery to list the available versions.
+       Run iotlm info jquery to list the available versions.
 
        */
       }));
@@ -853,13 +853,13 @@ describe('StandardRenderer', function () {
     }).spread(function (stdout, stderr) {
       expect(stdout).to.equal(multiline(function () {/*
        Usage:
-           rlm uninstall <name> [<name> ..] [<options>]
+           iotlm uninstall <name> [<name> ..] [<options>]
 
        Options:
            -h, --help              Show this help message
            -S, --save              Remove uninstalled packages from the project's library.json dependencies
            -D, --save-dev          Remove uninstalled packages from the project's library.json devDependencies
-           Additionally all global options listed in 'rlm help' are available
+           Additionally all global options listed in 'iotlm help' are available
 
        Description:
            Uninstalls a package locally from your libraries directory

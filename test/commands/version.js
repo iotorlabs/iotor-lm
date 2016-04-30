@@ -3,7 +3,7 @@ var expect = require('expect.js');
 var helpers = require('../helpers');
 var version = helpers.require('lib/commands').version;
 
-describe('racoon version', function () {
+describe('iotor version', function () {
 
   var mainPackage, packageWithoutTags;
 

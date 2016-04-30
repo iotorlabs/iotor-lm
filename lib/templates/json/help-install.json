@@ -14,7 +14,7 @@
     {
       "shorthand": "-f",
       "flag": "--force",
-      "description": "If dependencies are installed, it reinstalls all installed components. It also forces installation even when there are non-racoon directories with the same name in the components directory. Also bypasses the cache and overwrites to the cache anyway."
+      "description": "If dependencies are installed, it reinstalls all installed components. It also forces installation even when there are non-iotor directories with the same name in the components directory. Also bypasses the cache and overwrites to the cache anyway."
     },
     {
       "shorthand": "-h",

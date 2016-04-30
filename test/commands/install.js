@@ -200,13 +200,13 @@ describe('bower install', function () {
     });
   });
 
-  it('reads .racoonrc from cwd', function () {
+  it('reads .iotorrc from cwd', function () {
     mainPackage.prepare({
       foo: 'bar'
     });
 
     tempDir.prepare({
-      '.racoonrc': {
+      '.iotorrc': {
         directory: 'assets'
       },
       'library.json': {
@@ -222,13 +222,13 @@ describe('bower install', function () {
     });
   });
 
-  it('.racoonrc directory can be an absolute path', function () {
+  it('.iotorrc directory can be an absolute path', function () {
     mainPackage.prepare({
       foo: 'bar'
     });
 
     tempDir.prepare({
-      '.racoonrc': {
+      '.iotorrc': {
         directory: '/tmp/bower-absolute-destination-directory'
       },
       'library.json': {
@@ -263,7 +263,7 @@ describe('bower install', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           preinstall: 'node -e \'require("fs").writeFileSync("preinstall.txt", "%")\''
         }
@@ -285,7 +285,7 @@ describe('bower install', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'require("fs").writeFileSync("postinstall.txt", "%")\''
         }
@@ -303,7 +303,7 @@ describe('bower install', function () {
       'library.json': {
         name: 'test'
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'require("fs").writeFileSync("hooks.txt", "%")\'',
           preinstall: 'node -e \'require("fs").writeFileSync("hooks.txt", "%")\''
@@ -323,7 +323,7 @@ describe('bower install', function () {
       'library.json': {
         name: 'test'
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'var fs = require("fs"); fs.writeFileSync("hook.txt", fs.readFileSync("library.json"));\''
         }
@@ -349,7 +349,7 @@ describe('bower install', function () {
           package: mainPackage.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         scripts: {
           postinstall: 'node -e \'process.stdout.write("foobar")\''
         }
@@ -459,7 +459,7 @@ describe('bower install', function () {
           package3: package3.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         ignoredDependencies: ['package']
       }
     });
@@ -495,7 +495,7 @@ describe('bower install', function () {
           package3: package3.path
         }
       },
-      '.racoonrc': {
+      '.iotorrc': {
         ignoredDependencies: ['package']
       }
     });
@@ -540,8 +540,8 @@ describe('bower install', function () {
 
   it('errors if the components directory is not a directory', function () {
     tempDir.prepare({
-      '.racoonrc': {
-        directory: '.racoonrc'
+      '.iotorrc': {
+        directory: '.iotorrc'
       }
     });
 

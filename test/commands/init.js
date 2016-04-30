@@ -3,7 +3,7 @@ var helpers = require('../helpers');
 
 var init = helpers.command('init');
 
-describe('racoon init', function () {
+describe('iotor init', function () {
 
   var mainPackage = new helpers.TempDir();
 
