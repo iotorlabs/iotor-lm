@@ -1,10 +1,13 @@
 {
   "name": "racoon-lm",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "description": "An arduino library manager",
   "author": "Yuan Tao",
   "license": "MIT",
-  "repository": "taoyuan/racoon-lm",
+  "repository": {
+    "type": "git",
+    "url": "racoonio/racoon-lm"
+  },
   "main": "lib",
   "bin": {
     "rlm": "bin/rlm"
