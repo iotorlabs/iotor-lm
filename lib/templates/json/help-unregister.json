@@ -1,6 +1,6 @@
 {
   "command": "unregister",
-  "description": "Unregisters a package.",
+  "description": "Unregisters a library.",
   "usage": [
     "unregister <name> [<options>]"
   ],

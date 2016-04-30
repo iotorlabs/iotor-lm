@@ -1,10 +1,10 @@
 {
   "command": "info",
-  "description": "Displays overall information of a package or of a particular version.",
+  "description": "Displays overall information of a library or of a particular version.",
   "usage": [
-    "info <package> [<options>]",
-    "info <package> [<property>] [<options>]",
-    "info <package>#<version> [<property>] [<options>]"
+    "info <library> [<options>]",
+    "info <library> [<property>] [<options>]",
+    "info <library>#<version> [<property>] [<options>]"
   ],
   "options": [
     {

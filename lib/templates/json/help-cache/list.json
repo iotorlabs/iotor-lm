@@ -1,6 +1,6 @@
 {
   "command": "cache list",
-  "description": "Lists cached packages.",
+  "description": "Lists cached libraries.",
   "usage": [
     "cache list [<options>]",
     "cache list <name> [<name> ...] [<options>]"

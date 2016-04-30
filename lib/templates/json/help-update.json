@@ -1,6 +1,6 @@
 {
   "command": "update",
-  "description": "Updates installed packages to their newest version according to library.json.",
+  "description": "Updates installed libraries to their newest version according to library.json.",
   "usage": [
     "update <name> [<name> ..] [<options>]"
   ],

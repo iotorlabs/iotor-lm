@@ -1,10 +1,10 @@
 {
   "command": "home",
-  "description": "Opens a package homepage into your favorite browser.\n\nIf no <package> is passed, opens the homepage of the local package.",
+  "description": "Opens a library homepage into your favorite browser.\n\nIf no <library> is passed, opens the homepage of the local library.",
   "usage": [
     "home [<options>]",
-    "home <package> [<options>]",
-    "home <package>#<version> [<options>]"
+    "home <library> [<options>]",
+    "home <library>#<version> [<options>]"
   ],
   "options": [
     {

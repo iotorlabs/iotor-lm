@@ -1,6 +1,6 @@
 {
   "command": "uninstall",
-  "description": "Uninstalls a package locally from your libraries directory",
+  "description": "Uninstalls a library locally from your libraries directory",
   "usage": [
     "uninstall <name> [<name> ..] [<options>]"
   ],
@@ -18,12 +18,12 @@
     {
       "shorthand": "-S",
       "flag": "--save",
-      "description": "Remove uninstalled packages from the project's library.json dependencies"
+      "description": "Remove uninstalled libraries from the project's library.json dependencies"
     },
     {
       "shorthand": "-D",
       "flag": "--save-dev",
-      "description": "Remove uninstalled packages from the project's library.json devDependencies"
+      "description": "Remove uninstalled libraries from the project's library.json devDependencies"
     }
   ]
 }

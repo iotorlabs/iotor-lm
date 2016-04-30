@@ -1,6 +1,6 @@
 {
   "command": "install",
-  "description": "Installs the project dependencies or a specific set of endpoints.\nEndpoints can have multiple forms:\n- <source>\n- <source>#<target>\n- <name>=<source>#<target>\n\nWhere:\n- <source> is a package URL, physical location or registry name\n- <target> is a valid range, commit, branch, etc.\n- <name> is the name it should have locally.",
+  "description": "Installs the project dependencies or a specific set of endpoints.\nEndpoints can have multiple forms:\n- <source>\n- <source>#<target>\n- <name>=<source>#<target>\n\nWhere:\n- <source> is a library URL, physical location or registry name\n- <target> is a valid range, commit, branch, etc.\n- <name> is the name it should have locally.",
   "usage": [
     "install [<options>]",
     "install <endpoint> [<endpoint> ..] [<options>]"
@@ -29,17 +29,17 @@
     {
       "shorthand": "-S",
       "flag": "--save",
-      "description": "Save installed packages into the project's library.json dependencies"
+      "description": "Save installed libraries into the project's library.json dependencies"
     },
     {
       "shorthand": "-D",
       "flag": "--save-dev",
-      "description": "Save installed packages into the project's library.json devDependencies"
+      "description": "Save installed libraries into the project's library.json devDependencies"
     },
     {
       "shorthand": "-E",
       "flag": "--save-exact",
-      "description": "Configure installed packages with an exact version rather than semver"
+      "description": "Configure installed libraries with an exact version rather than semver"
     }
   ]
 }

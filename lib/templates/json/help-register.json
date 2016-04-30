@@ -1,6 +1,6 @@
 {
   "command": "register",
-  "description": "Registers a package.",
+  "description": "Registers a library.",
   "usage": [
     "register <name> <url> [<options>]"
   ],
