@@ -50,7 +50,7 @@ describe('bower register', function () {
 
   it('errors if name is not provided', function () {
     return helpers.run(register).fail(function (reason) {
-      expect(reason.message).to.be('Usage: alm register <name> <url>');
+      expect(reason.message).to.be('Usage: rlm register <name> <url>');
       expect(reason.code).to.be('EINVFORMAT');
     });
   });
@@ -58,7 +58,7 @@ describe('bower register', function () {
   it('errors if url is not provided', function () {
     return helpers.run(register, ['some-name'])
       .fail(function (reason) {
-        expect(reason.message).to.be('Usage: alm register <name> <url>');
+        expect(reason.message).to.be('Usage: rlm register <name> <url>');
         expect(reason.code).to.be('EINVFORMAT');
       });
   });
@@ -125,7 +125,7 @@ describe('bower register', function () {
     return helpers.expectEvent(promise.logger, 'confirm')
       .spread(function (e) {
         expect(e.type).to.be('confirm');
-        expect(e.message).to.be('Registering a package will make it installable via the registry (https://bower.herokuapp.com), continue?');
+        expect(e.message).to.be('Registering a package will make it installable via the registry (https://racoonio.herokuapp.com), continue?');
         expect(e.default).to.be(true);
       });
   });

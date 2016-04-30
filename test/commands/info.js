@@ -3,7 +3,7 @@ var expect = require('expect.js');
 var helpers = require('../helpers');
 var info = helpers.command('info');
 
-describe('alm info', function () {
+describe('rlm info', function () {
 
   it('correctly reads arguments', function () {
     expect(info.readOptions(['pkg', 'property']))

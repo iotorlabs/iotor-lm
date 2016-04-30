@@ -1,12 +1,12 @@
-# ano-lm: An arduino library manager
+# racoon-lm: An arduino library manager
 
-> ano-lm needs is forked from [Bower](https://github.com/bower/bower)
+> racoon-lm needs is forked from [Bower](https://github.com/bower/bower)
 
-[![Build Status](https://travis-ci.org/taoyuan/ano-lm.svg?branch=master)](https://travis-ci.org/taoyuan/ano-lm)
+[![Build Status](https://travis-ci.org/taoyuan/racoon-lm.svg?branch=master)](https://travis-ci.org/taoyuan/racoon-lm)
 [![Windows Build](https://ci.appveyor.com/api/projects/status/jr6vfra8w84plh2g/branch/master?svg=true)](https://ci.appveyor.com/project/sheerun/bower/history)
-[![Coverage Status](https://img.shields.io/coveralls/taoyuan/ano-lm.svg)](https://coveralls.io/r/taoyuan/ano-lm?branch=master)
-[![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/pr?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
-[![Issue Stats](http://issuestats.com/github/taoyuan/ano-lm/badge/issue?style=flat)](http://issuestats.com/github/taoyuan/ano-lm)
+[![Coverage Status](https://img.shields.io/coveralls/taoyuan/racoon-lm.svg)](https://coveralls.io/r/taoyuan/racoon-lm?branch=master)
+[![Issue Stats](http://issuestats.com/github/taoyuan/racoon-lm/badge/pr?style=flat)](http://issuestats.com/github/taoyuan/racoon-lm)
+[![Issue Stats](http://issuestats.com/github/taoyuan/racoon-lm/badge/issue?style=flat)](http://issuestats.com/github/taoyuan/racoon-lm)
 
 ---
 
@@ -14,7 +14,7 @@
 ## Install
 
 ```sh
-$ npm install -g ano-lm
+$ npm install -g racoon-lm
 ```
 
 ANO LM depends on [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/). Also make sure that [git](http://git-scm.com/) is installed as some bower
@@ -29,13 +29,13 @@ See complete command line reference at [bower.io/docs/api/](http://bower.io/docs
 
 ```sh
 # install dependencies listed in library.json
-$ alm install
+$ rlm install
 
 # install a library and add it to library.json
-$ alm install <library> --save
+$ rlm install <library> --save
 
 # install specific version of a library and add it to library.json
-$ alm install <library>#<version> --save
+$ rlm install <library>#<version> --save
 ```
 
 ### Uninstalling libraries
@@ -43,12 +43,12 @@ $ alm install <library>#<version> --save
 To uninstall a locally installed library:
 
 ```sh
-$ alm uninstall <library-name>
+$ rlm uninstall <library-name>
 ```
 
 ### prezto and oh-my-zsh users
 
-On `prezto` or `oh-my-zsh`, do not forget to `alias alm='noglob alm'` or `alm install jquery\#1.9.1`
+On `prezto` or `oh-my-zsh`, do not forget to `alias rlm='noglob rlm'` or `rlm install jquery\#1.9.1`
 
 ### Never run Bower with sudo
 
@@ -79,7 +79,7 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 
 ## Configuration
 
-ANO LM can be configured using JSON in a `.anorc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
+ANO LM can be configured using JSON in a `.racoonrc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).
 
 ## License
 

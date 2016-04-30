@@ -3,7 +3,7 @@
     "<command> [<args>] [<options>]"
   ],
   "commands": {
-    "cache": "Manage ano cache",
+    "cache": "Manage racoon cache",
     "help": "Display help information about Ano",
     "home": "Opens a library homepage into your favorite browser",
     "info": "Info of a particular library",

@@ -3,7 +3,7 @@ var helpers = require('../helpers');
 
 var init = helpers.command('init');
 
-describe('ano init', function () {
+describe('racoon init', function () {
 
   var mainPackage = new helpers.TempDir();
 

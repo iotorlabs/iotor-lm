@@ -50,7 +50,7 @@ describe('bower home', function () {
 
   it('deals with custom directory', function () {
     mainPackage.prepare({
-      '.anorc': {directory: 'components'},
+      '.racoonrc': {directory: 'components'},
       'libraries/angular/.library.json': {name: 'angular'},
       'libraries/angular/angular.js': 'angular source',
       'components/angular/.library.json': {name: 'angular'},

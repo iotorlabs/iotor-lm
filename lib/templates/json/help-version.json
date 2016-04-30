@@ -1,6 +1,6 @@
 {
   "command": "version",
-  "description": "Creates an empty version commit and tag, and fail if the repo is not clean.\n\nThe <version> argument should be a valid semver string, or one of following:\nbuild, patch, minor, major.\n\nIf supplied with --message (shorthand: -m) config option, ano will use it\nas a commit message when creating a version commit. If the message config\ncontains %s then that will be replaced with the resulting version number.\n\nFor example:\n\n    ano version patch -m \"Upgrade to %s for reasons\"",
+  "description": "Creates an empty version commit and tag, and fail if the repo is not clean.\n\nThe <version> argument should be a valid semver string, or one of following:\nbuild, patch, minor, major.\n\nIf supplied with --message (shorthand: -m) config option, racoon will use it\nas a commit message when creating a version commit. If the message config\ncontains %s then that will be replaced with the resulting version number.\n\nFor example:\n\n    racoon version patch -m \"Upgrade to %s for reasons\"",
   "usage": [
     "version [<version> | major | minor | patch]"
   ],

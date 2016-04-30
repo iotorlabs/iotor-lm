@@ -1,10 +1,10 @@
 var expect = require('expect.js');
 var runBin = require('../helpers').runBin;
 
-describe('alm', function () {
+describe('rlm', function () {
   process.env.CI = '1';
 
-  it('runs alm installation', function () {
+  it('runs rlm installation', function () {
     var result = runBin();
     var text = result.stdout.toString();
 
